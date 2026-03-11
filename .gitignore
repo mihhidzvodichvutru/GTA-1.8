@@ -2,7 +2,7 @@
 .godot/
 *.godot/
 *.cfg
-
+.vscode/
 # Bỏ qua các file xuất game cuối cùng
 *.apk
 *.exe
