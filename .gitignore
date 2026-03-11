@@ -1,3 +1,10 @@
-# Godot 4+ specific ignores
+# Bỏ qua thư mục cache của Godot 4+
 .godot/
-/android/
+*.godot/
+*.cfg
+
+# Bỏ qua các file xuất game cuối cùng
+*.apk
+*.exe
+*.pck
+*.zip
