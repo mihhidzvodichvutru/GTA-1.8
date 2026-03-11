@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cwgohofji56bj"]
+
+[node name="Shipper" type="CharacterBody2D" unique_id=779934077]
+position = Vector2(3564, -1387)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1437301338]
+position = Vector2(-39.867188, 94.83447)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1954782199]
+position = Vector2(41.743164, 40.428223)
