@@ -27,3 +27,4 @@ func _physics_process(delta: float):
 		
 	# Lệnh thần thánh giúp xe di chuyển và tự trượt khi đụng tường
 	move_and_slide()
+	
