@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://buqrqhyn5ikoo"]
+
+[node name="Toanha" type="StaticBody2D" unique_id=1193317726]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1405779754]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=265097670]

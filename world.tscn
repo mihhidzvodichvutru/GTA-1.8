@@ -2,10 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://d143disirvjtj" path="res://character_body_2d.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://dsc6qj453rb7y" path="res://new folder/toanha_1.tscn" id="2_tlwt5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqk2v"]
+radius = 71.0
+height = 142.0
 
 [node name="World" type="Node2D" unique_id=59815880]
 
-[node name="CharacterBody2D" parent="." unique_id=841592191 instance=ExtResource("1_f3sb7")]
+[node name="Shipper" parent="." unique_id=841592191 instance=ExtResource("1_f3sb7")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Shipper" unique_id=676825033]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_aqk2v")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1114554479]
 position = Vector2(-369, -107.5)
@@ -34,3 +43,10 @@ texture = ExtResource("2_fj7yv")
 [node name="Icon6" type="Sprite2D" parent="." unique_id=1321647154]
 position = Vector2(250, -155)
 texture = ExtResource("2_fj7yv")
+
+[node name="Icon7" type="Sprite2D" parent="." unique_id=1127283832]
+position = Vector2(-179, 106)
+texture = ExtResource("2_fj7yv")
+
+[node name="Toanha1" parent="." unique_id=1193317726 instance=ExtResource("2_tlwt5")]
+position = Vector2(905, 469)
