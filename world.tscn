@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://d143disirvjtj" path="res://character_body_2d.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://dsc6qj453rb7y" path="res://new folder/toanha_1.tscn" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://c3cohyxhm3th8" path="res://new folder/zombie.tscn" id="4_aqk2v"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqk2v"]
 radius = 71.0
@@ -21,32 +22,13 @@ position = Vector2(-369, -107.5)
 scale = Vector2(0.546875, 0.6640625)
 texture = ExtResource("2_fj7yv")
 
-[node name="Icon2" type="Sprite2D" parent="." unique_id=287095302]
-position = Vector2(501.5, -134.5)
-scale = Vector2(0.6015625, 0.5859375)
-texture = ExtResource("2_fj7yv")
-
-[node name="Icon3" type="Sprite2D" parent="." unique_id=1861462034]
-position = Vector2(484.5, 142.5)
-scale = Vector2(0.6640625, 0.6484375)
-texture = ExtResource("2_fj7yv")
-
 [node name="Icon4" type="Sprite2D" parent="." unique_id=975649600]
 position = Vector2(172, 157)
 scale = Vector2(0.6171875, 0.71875)
 texture = ExtResource("2_fj7yv")
 
-[node name="Icon5" type="Sprite2D" parent="." unique_id=303628605]
-position = Vector2(-404, 149)
-texture = ExtResource("2_fj7yv")
-
-[node name="Icon6" type="Sprite2D" parent="." unique_id=1321647154]
-position = Vector2(250, -155)
-texture = ExtResource("2_fj7yv")
-
-[node name="Icon7" type="Sprite2D" parent="." unique_id=1127283832]
-position = Vector2(-179, 106)
-texture = ExtResource("2_fj7yv")
-
 [node name="Toanha1" parent="." unique_id=1193317726 instance=ExtResource("2_tlwt5")]
 position = Vector2(905, 469)
+
+[node name="Toanha" parent="." unique_id=1138284835 instance=ExtResource("4_aqk2v")]
+position = Vector2(1312, -152)

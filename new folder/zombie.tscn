@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c3cohyxhm3th8"]
+
+[ext_resource type="PackedScene" uid="uid://buqrqhyn5ikoo" path="res://new folder/toanha.tscn" id="1_dlsdc"]
+[ext_resource type="Texture2D" uid="uid://bxasfyqlf316p" path="res://new folder/108-1086909_zombies-peashooter-pixel-minecraft-plants-vs-zombies-pixel.png" id="2_5ikae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v0iol"]
+size = Vector2(392, 440)
+
+[node name="Toanha" unique_id=1193317726 instance=ExtResource("1_dlsdc")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=1405779754]
+position = Vector2(-4.5776367e-05, 33.999954)
+scale = Vector2(0.4639535, 0.47130707)
+texture = ExtResource("2_5ikae")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=265097670]
+position = Vector2(-1, 35)
+shape = SubResource("RectangleShape2D_v0iol")
