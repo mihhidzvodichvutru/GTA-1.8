@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dsc6qj453rb7y"]
+
+[ext_resource type="PackedScene" uid="uid://buqrqhyn5ikoo" path="res://new folder/toanha.tscn" id="1_pf7h1"]
+[ext_resource type="Texture2D" uid="uid://b1t24qguu4xhc" path="res://new folder/landmark-oe5 (1).png" id="2_k8sge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtcms"]
+size = Vector2(1083.5, 187.5)
+
+[node name="Toanha1" unique_id=1193317726 instance=ExtResource("1_pf7h1")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=1405779754]
+position = Vector2(-46, 14)
+texture = ExtResource("2_k8sge")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=265097670]
+position = Vector2(76.25, 431.75)
+shape = SubResource("RectangleShape2D_vtcms")
