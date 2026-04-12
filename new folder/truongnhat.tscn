@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://b7foe0xxcni2u"]
+
+[ext_resource type="PackedScene" uid="uid://buqrqhyn5ikoo" path="res://new folder/toanha.tscn" id="1_j4wgo"]
+[ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_f6l4h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w7wr3"]
+size = Vector2(144, 132)
+
+[node name="truongnhat" unique_id=1193317726 instance=ExtResource("1_j4wgo")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=1405779754]
+texture = ExtResource("2_f6l4h")
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=265097670]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_w7wr3")

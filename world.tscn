@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://dsc6qj453rb7y" path="res://new folder/toanha_1.tscn" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c3cohyxhm3th8" path="res://new folder/zombie.tscn" id="4_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://b7foe0xxcni2u" path="res://new folder/truongnhat.tscn" id="5_036b0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqk2v"]
 radius = 71.0
@@ -32,3 +33,6 @@ position = Vector2(905, 469)
 
 [node name="Toanha" parent="." unique_id=1138284835 instance=ExtResource("4_aqk2v")]
 position = Vector2(1312, -152)
+
+[node name="truongnhat" parent="." unique_id=1596499003 instance=ExtResource("5_036b0")]
+position = Vector2(-193, 478)
