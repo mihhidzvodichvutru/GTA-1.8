@@ -7,6 +7,7 @@
 size = Vector2(392, 440)
 
 [node name="Toanha" unique_id=1193317726 instance=ExtResource("1_dlsdc")]
+position = Vector2(3, 0)
 
 [node name="Sprite2D" parent="." index="0" unique_id=1405779754]
 position = Vector2(-4.5776367e-05, 33.999954)

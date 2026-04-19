@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cwgohofji56bj"]
+
+[ext_resource type="Script" uid="uid://cu6ruqv5heiqi" path="res://shipper.gd" id="1_etof5"]
+[ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_arrts"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7ofg"]
+size = Vector2(37, 37)
+
+[node name="Shipper" type="CharacterBody2D" unique_id=2081863854 groups=["Player"]]
+script = ExtResource("1_etof5")
+max_speed = 180.0
+acceleration = 180.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1797225362]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_h7ofg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=103443862]
+scale = Vector2(0.28906247, 0.28125)
+texture = ExtResource("2_arrts")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=57430324]

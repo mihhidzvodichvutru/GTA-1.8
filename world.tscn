@@ -1,22 +1,13 @@
 [gd_scene format=3 uid="uid://bmfqak0imwtau"]
 
-[ext_resource type="PackedScene" uid="uid://d143disirvjtj" path="res://character_body_2d.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://dsc6qj453rb7y" path="res://new folder/toanha_1.tscn" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://c3cohyxhm3th8" path="res://new folder/zombie.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://b7foe0xxcni2u" path="res://new folder/truongnhat.tscn" id="5_036b0"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_aqk2v"]
-radius = 71.0
-height = 142.0
+[ext_resource type="PackedScene" uid="uid://hwggdpj2o1kx" path="res://boy_pho.tscn" id="6_dwbse"]
+[ext_resource type="PackedScene" uid="uid://cwgohofji56bj" path="res://shipper.tscn" id="6_pkg7o"]
 
 [node name="World" type="Node2D" unique_id=59815880]
-
-[node name="Shipper" parent="." unique_id=841592191 instance=ExtResource("1_f3sb7")]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Shipper" unique_id=676825033]
-position = Vector2(1, 0)
-shape = SubResource("CapsuleShape2D_aqk2v")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=1114554479]
 position = Vector2(-369, -107.5)
@@ -36,3 +27,38 @@ position = Vector2(1312, -152)
 
 [node name="truongnhat" parent="." unique_id=1596499003 instance=ExtResource("5_036b0")]
 position = Vector2(-193, 478)
+
+[node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("6_dwbse")]
+position = Vector2(663, -86)
+
+[node name="BoyPho2" parent="." unique_id=738680268 instance=ExtResource("6_dwbse")]
+position = Vector2(755, -123)
+
+[node name="BoyPho3" parent="." unique_id=797680446 instance=ExtResource("6_dwbse")]
+position = Vector2(652, -241)
+
+[node name="BoyPho4" parent="." unique_id=1460364977 instance=ExtResource("6_dwbse")]
+position = Vector2(572, -152)
+
+[node name="BoyPho5" parent="." unique_id=728743494 instance=ExtResource("6_dwbse")]
+position = Vector2(773, -243)
+
+[node name="BoyPho6" parent="." unique_id=733747994 instance=ExtResource("6_dwbse")]
+position = Vector2(866, -177)
+
+[node name="BoyPho7" parent="." unique_id=2144953382 instance=ExtResource("6_dwbse")]
+position = Vector2(526, -275)
+
+[node name="BoyPho8" parent="." unique_id=1139394720 instance=ExtResource("6_dwbse")]
+position = Vector2(631, 24)
+
+[node name="BoyPho9" parent="." unique_id=1530802290 instance=ExtResource("6_dwbse")]
+position = Vector2(814, -43)
+
+[node name="BoyPho10" parent="." unique_id=485442016 instance=ExtResource("6_dwbse")]
+position = Vector2(885, -294)
+
+[node name="Shipper" parent="." unique_id=2081863854 instance=ExtResource("6_pkg7o")]
+position = Vector2(171, -48)
+max_speed = 300.0
+acceleration = 300.0
