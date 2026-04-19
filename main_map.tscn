@@ -4063,6 +4063,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_v4mvp")
 
 [node name="MainMap" type="Node2D" unique_id=1466705353]
+position = Vector2(-1256, 497)
 script = ExtResource("1_5hk42")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=116456169]
