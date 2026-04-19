@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://brf58s5x0smdq"]
+
+[ext_resource type="Texture2D" uid="uid://bvycrsii0b4ix" path="res://main_menu.png" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://bdlou1alj2ra6" path="res://main_menu.gd" id="1_7vrkn"]
+[ext_resource type="AudioStream" uid="uid://pbxg5ddbymy2" path="res://TOICAOVATOICAOHON.ogg" id="2_jix8l"]
+[ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_fu7sn"]
+
+[node name="MainMenu" type="Control" unique_id=219978878]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7vrkn")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=896437574]
+stream = ExtResource("2_jix8l")
+volume_db = -10.0
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1228238807]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BgPolygon" type="Polygon2D" parent="." unique_id=603729556]
+position = Vector2(61, 24.000002)
+scale = Vector2(0.32195324, 0.27826247)
+antialiased = true
+texture = ExtResource("1_06t4h")
+polygon = PackedVector2Array(456.6648, 11.263855, -2.8055377, 2128.8809, 3187.0989, 2019.859, 3052.1462, 4.9869995)
+uv = PackedVector2Array(456.6648, 11.263855, 1.5924072, 2145.396, 3187.0989, 2019.859, 3052.1462, 4.9869995)
+
+[node name="HighlightPoly" type="Polygon2D" parent="." unique_id=911091602]
+color = Color(0, 1, 1, 1)
+polygon = PackedVector2Array(511, 236, 508, 276, 643, 272, 645, 230)
+
+[node name="KhuonStart" type="Polygon2D" parent="." unique_id=1092505293]
+visible = false
+polygon = PackedVector2Array(512, 235, 508, 277, 644, 272, 649, 228)
+
+[node name="KhuonOptions" type="Polygon2D" parent="." unique_id=1581658934]
+visible = false
+polygon = PackedVector2Array(510, 287, 517, 329, 635, 333, 644, 292)
+
+[node name="KhuonQuit" type="Polygon2D" parent="." unique_id=1760240444]
+visible = false
+polygon = PackedVector2Array(512, 351, 509, 388, 626, 390, 638, 347)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1853922132]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.5
+offset_top = -96.5
+offset_right = 138.5
+offset_bottom = 96.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnStart" type="Button" parent="VBoxContainer" unique_id=85750111]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_fu7sn")
+theme_override_font_sizes/font_size = 36
+text = "BẮT ĐẦU"
+flat = true
+
+[node name="BtnOptions" type="Button" parent="VBoxContainer" unique_id=523144693]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_fu7sn")
+theme_override_font_sizes/font_size = 36
+text = "CÀI ĐẶT"
+flat = true
+
+[node name="BtnQuit" type="Button" parent="VBoxContainer" unique_id=109704691]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0.34901962, 0.7019608, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_fu7sn")
+theme_override_font_sizes/font_size = 36
+text = "THOÁT"
+flat = true
