@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bk5204v8emnn3" path="res://map.png" id="2_ob7o4"]
 [ext_resource type="Texture2D" uid="uid://brraj2pigr1qu" path="res://wall.png" id="3_1ns3a"]
 [ext_resource type="Texture2D" uid="uid://cqexb51xvtjc1" path="res://duong.png" id="3_v4mvp"]
-[ext_resource type="PackedScene" uid="uid://d143disirvjtj" path="res://character_body_2d.tscn" id="4_ob7o4"]
+[ext_resource type="PackedScene" uid="uid://dee2qrowy7sw" path="res://character_body_2d.tscn" id="4_ob7o4"]
 [ext_resource type="Texture2D" uid="uid://xgc4fhtstjgy" path="res://nv.png" id="5_1ns3a"]
+[ext_resource type="PackedScene" uid="uid://hwggdpj2o1kx" path="res://boy_pho.tscn" id="5_v4mvp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qu338"]
 texture = ExtResource("3_v4mvp")
@@ -4156,3 +4157,6 @@ region_rect = Rect2(123.08543, 95.93913, 26.135506, 48.388794)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D3" unique_id=1174658587]
 shape = SubResource("CapsuleShape2D_qu338")
+
+[node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
+position = Vector2(-1125, -359)

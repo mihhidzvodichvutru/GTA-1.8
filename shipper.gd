@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 # Bỏ biến speed cũ đi, thay bằng 3 thông số "chuẩn xe máy" này:
-@export var max_speed: float = 200.0    # Tốc độ tối đa (tôi giảm xuống 300 cho vừa ngõ hẻm)
-@export var acceleration: float = 200.0 # Độ "bốc" của xe (số càng nhỏ xe lên ga càng chậm)
-@export var friction: float = 1000.0    # Quán tính/Ma sát (số càng nhỏ xe trượt càng dài khi nhả ga)
+@export var max_speed: float = 200    # Tốc độ tối đa (tôi giảm xuống 300 cho vừa ngõ hẻm)
+@export var acceleration: float = 210 # Độ "bốc" của xe (số càng nhỏ xe lên ga càng chậm)
+@export var friction: float = 800    # Quán tính/Ma sát (số càng nhỏ xe trượt càng dài khi nhả ga)
 
 func _physics_process(delta):
 	var move_dir = Vector2.ZERO
