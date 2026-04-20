@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://hwggdpj2o1kx"]
 
-[ext_resource type="Script" uid="uid://w2h4ij6klnh7" path="res://BoyPho.gd" id="1_kscsk"]
+[ext_resource type="Script" uid="uid://8x6idaktr1jo" path="res://BoyPho.gd" id="1_kscsk"]
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_lx5of"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hg81f"]
-size = Vector2(22, 22)
+[sub_resource type="CircleShape2D" id="CircleShape2D_7v856"]
+radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qwgw"]
-radius = 43.416588
+radius = 214.11446
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lx5of"]
-radius = 18.027756
+radius = 17.0
 
 [node name="BoyPho" type="CharacterBody2D" unique_id=83811659]
+collision_layer = 2
 script = ExtResource("1_kscsk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=575199712]
@@ -21,7 +22,7 @@ scale = Vector2(0.171875, 0.1640625)
 texture = ExtResource("2_lx5of")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=52155276]
-shape = SubResource("RectangleShape2D_hg81f")
+shape = SubResource("CircleShape2D_7v856")
 
 [node name="AggroArea" type="Area2D" parent="." unique_id=651184737]
 collision_mask = 15
@@ -33,6 +34,17 @@ shape = SubResource("CircleShape2D_2qwgw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1739930490]
 shape = SubResource("CircleShape2D_lx5of")
+
+[node name="RayLeft" type="RayCast2D" parent="." unique_id=1437129289]
+rotation = -0.7853982
+target_position = Vector2(23.334526, -2.1213198)
+
+[node name="RayCenter" type="RayCast2D" parent="." unique_id=186731675]
+target_position = Vector2(25, -1)
+
+[node name="RayRight" type="RayCast2D" parent="." unique_id=416375818]
+rotation = 0.7853982
+target_position = Vector2(20.5061, 0.7071066)
 
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]
