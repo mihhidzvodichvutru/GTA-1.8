@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bk5204v8emnn3" path="res://map.png" id="2_ob7o4"]
 [ext_resource type="Texture2D" uid="uid://brraj2pigr1qu" path="res://wall.png" id="3_1ns3a"]
 [ext_resource type="PackedScene" uid="uid://dee2qrowy7sw" path="res://character_body_2d.tscn" id="4_ob7o4"]
+[ext_resource type="PackedScene" uid="uid://hwggdpj2o1kx" path="res://boy_pho.tscn" id="5_v4mvp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v4mvp"]
 texture = ExtResource("3_1ns3a")
@@ -4079,3 +4080,12 @@ metadata/_edit_lock_ = true
 
 [node name="CharacterBody2D" parent="." unique_id=841592191 instance=ExtResource("4_ob7o4")]
 position = Vector2(-1173, 229)
+
+[node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
+position = Vector2(854, -255)
+
+[node name="BoyPho2" parent="." unique_id=1682773899 instance=ExtResource("5_v4mvp")]
+position = Vector2(872, -45)
+
+[node name="BoyPho3" parent="." unique_id=734228340 instance=ExtResource("5_v4mvp")]
+position = Vector2(851, -501)

@@ -7,7 +7,7 @@
 size = Vector2(22, 22)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qwgw"]
-radius = 43.416588
+radius = 77.05842
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lx5of"]
 radius = 18.027756
@@ -33,6 +33,17 @@ shape = SubResource("CircleShape2D_2qwgw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1739930490]
 shape = SubResource("CircleShape2D_lx5of")
+
+[node name="RayLeft" type="RayCast2D" parent="." unique_id=1437129289]
+rotation = -0.7853982
+target_position = Vector2(87.681244, 14.142136)
+
+[node name="RayCenter" type="RayCast2D" parent="." unique_id=186731675]
+target_position = Vector2(108, 0)
+
+[node name="RayRight" type="RayCast2D" parent="." unique_id=416375818]
+rotation = 0.7853982
+target_position = Vector2(88.38835, -14.849243)
 
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]
