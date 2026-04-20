@@ -14,6 +14,7 @@ var astar_grid: AStarGrid2D
 # PHẦN 2: KHỞI CHẠY KHI MỞ MAP
 # ==========================================
 func _ready():
+	PauseMenu.can_pause = true
 	# 1. Chạy thuật toán quét bản đồ A*
 	setup_astar_grid()
 	

@@ -1,0 +1,260 @@
+[gd_scene format=3 uid="uid://bjfgo7punb371"]
+
+[ext_resource type="Script" uid="uid://uycbaafri40c" path="res://pause_menu.gd" id="1_2nc7s"]
+[ext_resource type="Texture2D" uid="uid://dofccvml01683" path="res://LogoGTA1.8.png" id="1_05uyy"]
+[ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="2_05uyy"]
+[ext_resource type="AudioStream" uid="uid://pbxg5ddbymy2" path="res://TOICAOVATOICAOHON.ogg" id="2_d3xb4"]
+[ext_resource type="Texture2D" uid="uid://dytgljmukttwj" path="res://pause_menu.png" id="4_2nc7s"]
+[ext_resource type="Texture2D" uid="uid://dpng78fl1notr" path="res://settings_menu.png" id="5_d3xb4"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=744693632]
+process_mode = 3
+script = ExtResource("1_2nc7s")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1623066271]
+stream = ExtResource("2_d3xb4")
+volume_db = -10.0
+autoplay = true
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1308240256]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameLogo" type="TextureRect" parent="." unique_id=1687559942]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 185.0
+offset_bottom = 186.0
+texture = ExtResource("1_05uyy")
+expand_mode = 1
+
+[node name="GiaoDienChinh" type="Control" parent="." unique_id=1094797255]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Pause" type="Label" parent="GiaoDienChinh" unique_id=1951176646]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 755.0
+offset_top = -1.0
+offset_right = 1112.0
+offset_bottom = 96.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.5868582, 0.40646583, 0.1380148, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 72
+text = "TẠM DỪNG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseBg" type="Polygon2D" parent="GiaoDienChinh" unique_id=1745988672]
+position = Vector2(61, 24.000002)
+scale = Vector2(0.32195324, 0.27826247)
+antialiased = true
+texture = ExtResource("4_2nc7s")
+texture_scale = Vector2(0.2, 0.2)
+polygon = PackedVector2Array(403.43066, 173.36798, 192.57455, 2102.3318, 3115.3594, 1965.77, 2909.1846, 301.11227)
+uv = PackedVector2Array(874.14746, 348.3838, 419.07513, 2482.5159, 3604.5815, 2356.979, 3469.629, 342.10693)
+
+[node name="HighlightPoly" type="Polygon2D" parent="GiaoDienChinh" unique_id=1763846486]
+color = Color(0.54509807, 0.27058825, 0.07450981, 1)
+polygon = PackedVector2Array(508, 216, 503, 264, 650, 265, 647, 212)
+
+[node name="KhuonResume" type="Polygon2D" parent="GiaoDienChinh" unique_id=366417211]
+visible = false
+polygon = PackedVector2Array(511, 220, 506, 262, 643, 261, 645, 214)
+
+[node name="KhuonRestart" type="Polygon2D" parent="GiaoDienChinh" unique_id=5123539]
+visible = false
+polygon = PackedVector2Array(507, 280, 514, 318, 645, 318, 634, 272)
+
+[node name="KhuonOptions" type="Polygon2D" parent="GiaoDienChinh" unique_id=737653068]
+visible = false
+polygon = PackedVector2Array(503, 337, 511, 375, 645, 375, 652, 330)
+
+[node name="KhuonQuit" type="Polygon2D" parent="GiaoDienChinh" unique_id=1040627396]
+visible = false
+polygon = PackedVector2Array(512, 390, 517, 431, 631, 433, 632, 384)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GiaoDienChinh" unique_id=1445324596]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 417.5
+offset_top = 207.5
+offset_right = 694.5
+offset_bottom = 400.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnResume" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=2121307442]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "TIẾP TỤC"
+flat = true
+
+[node name="BtnRestart" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=765515501]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "CHƠI LẠI"
+flat = true
+
+[node name="BtnOptions" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=1181542666]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "CÀI ĐẶT"
+flat = true
+
+[node name="BtnQuit" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=1885131259]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "THOÁT"
+flat = true
+
+[node name="GiaoDienCaiDat" type="Control" parent="." unique_id=1949518342]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 647.0
+
+[node name="Setting" type="Label" parent="GiaoDienCaiDat" unique_id=1729333353]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = -1.0
+offset_bottom = 96.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.5868582, 0.40646583, 0.1380148, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 72
+text = "CÀI ĐẶT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KhungNenCaiDat" type="Polygon2D" parent="GiaoDienCaiDat" unique_id=910484431]
+texture = ExtResource("5_d3xb4")
+texture_scale = Vector2(1.6, 1.6)
+polygon = PackedVector2Array(178, 70, 138, 598, 1038, 553, 908, 41)
+uv = PackedVector2Array(41.56159, 72.14359, 1.5615871, 600.1436, 901.56165, 555.1436, 771.56165, 43.143593)
+
+[node name="HighlightCaiDat" type="Polygon2D" parent="GiaoDienCaiDat" unique_id=23829109]
+color = Color(0.54509807, 0.27058825, 0.07450981, 1)
+
+[node name="KhuonBack" type="Polygon2D" parent="GiaoDienCaiDat" unique_id=2025015790]
+visible = false
+polygon = PackedVector2Array(476, 487, 463, 542, 633, 542, 645, 489)
+
+[node name="KhuonAmLuong" type="Polygon2D" parent="GiaoDienCaiDat" unique_id=1932038557]
+visible = false
+polygon = PackedVector2Array(184, 81, 183, 129, 922, 129, 918, 84)
+
+[node name="KhuonHienThi" type="Polygon2D" parent="GiaoDienCaiDat" unique_id=1372136933]
+visible = false
+position = Vector2(1.2133331, 0)
+scale = Vector2(0.99333334, 1)
+polygon = PackedVector2Array(182, 139, 184, 190, 932, 193, 929, 135)
+
+[node name="MarginContainer" type="MarginContainer" parent="GiaoDienCaiDat" unique_id=13028046]
+layout_mode = 0
+offset_left = 193.0
+offset_top = 84.0
+offset_right = 914.0
+offset_bottom = 540.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GiaoDienCaiDat/MarginContainer" unique_id=1783895227]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer" unique_id=1074588819]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer/HBoxContainer" unique_id=858972989]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "Âm Lượng"
+
+[node name="HSlider" type="HSlider" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1449130875]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="HBoxDisplay" type="HBoxContainer" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer" unique_id=630339298]
+layout_mode = 2
+mouse_filter = 0
+
+[node name="Label" type="Label" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer/HBoxDisplay" unique_id=837960623]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "Chế độ hiển thị"
+
+[node name="OptDisplay" type="OptionButton" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer/HBoxDisplay" unique_id=1491321104]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+
+[node name="BtnBack" type="Button" parent="GiaoDienCaiDat/MarginContainer/VBoxContainer" unique_id=224860882]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_05uyy")
+theme_override_font_sizes/font_size = 36
+text = "QUAY LẠI"
+flat = true
