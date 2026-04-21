@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @export var speed: float = 90
 @export var steer_force: float = 10.0
+@export var separation_weight: float = 2.0 # Thêm trọng số tách bầy để đẩy nhau ra
 
 @export var sat_thuong: int = 10
 @export var thoi_gian_hoi_chieu: float = 1.0 
@@ -9,6 +10,7 @@ var thoi_gian_da_qua: float = 0.0
 
 var current_avoid_dir: Vector2 = Vector2.ZERO
 var target_player: Node2D = null
+var nearby_peers: Array = [] # Cái túi để đựng đồng bọn, giúp không bị dẫm chân
 
 # --- 1. HỆ THỐNG MÁY TRẠNG THÁI ---
 enum State { WANDER, CHASE }
@@ -74,7 +76,6 @@ func _physics_process(delta: float) -> void:
 				current_state = State.WANDER # Mất dấu thì đi lượn tiếp
 
 	# --- 4. HỆ THỐNG NÉ TƯỜNG DÙNG CHUNG ---
-	# (Cho cả lúc đi dạo và rượt đuổi)
 	if velocity.length() > 5.0:
 		ray_left.force_raycast_update()
 		ray_center.force_raycast_update()
@@ -89,18 +90,39 @@ func _physics_process(delta: float) -> void:
 		target_avoid_dir = ray_right.get_collision_normal()
 
 	current_avoid_dir = current_avoid_dir.lerp(target_avoid_dir, 15.0 * delta)
+	
+	# --- 4.5. TÍNH TOÁN LỰC ĐẨY NHAU (SEPARATION) ---
+	var separation_dir = Vector2.ZERO
+	for peer in nearby_peers:
+		if is_instance_valid(peer): # Đảm bảo thằng kia chưa chết
+			var diff = global_position - peer.global_position
+			var dist = diff.length()
+			if dist > 0:
+				# Toán học: Càng gần càng đẩy mạnh
+				separation_dir += (diff.normalized() / dist) * 100
+	separation_dir *= separation_weight
+	
+	# --- TỔNG HỢP CÁC LỰC ---
 	var final_dir = desired_dir
 	
+	# Cộng lực né tường
 	if current_avoid_dir.length() > 0.01:
 		final_dir = (desired_dir + current_avoid_dir * 2.5).normalized()
 		# Nếu đang đi dạo mà đập mặt vào tường -> Dội lại và đổi hướng dạo
 		if current_state == State.WANDER and target_avoid_dir != Vector2.ZERO:
 			wander_dir = current_avoid_dir
 
+	# Cộng lực tách bầy
+	if separation_dir.length() > 0:
+		final_dir = (final_dir + separation_dir).normalized()
+
+	# Áp dụng gia tốc
 	velocity = velocity.lerp(final_dir * current_speed, steer_force * delta)
 
+	# --- FIX LỖI CHẠY NGANG ---
+	# Tôi đã bỏ cái "+ PI / 2" ở đây. Nó sẽ quay đúng theo hướng Vector vận tốc.
 	if velocity.length() > 5.0:
-		rotation = velocity.angle() + PI / 2
+		rotation = velocity.angle()
 
 	move_and_slide()
 	
@@ -115,15 +137,25 @@ func _physics_process(delta: float) -> void:
 					ke_bi_tong.bi_tru_mau(sat_thuong)
 				thoi_gian_da_qua = 0.0
 
-# --- 6. TÍN HIỆU TẦM NHÌN (Đã xóa cái Hive Mind) ---
+# --- 6. TÍN HIỆU TẦM NHÌN ---
 func _on_aggro_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		target_player = body
 		current_state = State.CHASE
-		# Đã xóa dòng get_tree().call_group ở đây!
 
 func _on_aggro_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		print(">>> Shipper đã cắt đuôi thành công.")
 		target_player = null
 		current_state = State.WANDER
+
+# --- 7. TÍN HIỆU TÁCH BẦY (ĐÃ LẤP ĐẦY) ---
+func _on_separation_area_body_entered(body: Node2D) -> void:
+	# Chỉ nhận diện đồng bọn mang group Enemy, tránh bị đẩy bởi Player hoặc Tường
+	if body != self and body.is_in_group("Enemy"):
+		if not nearby_peers.has(body):
+			nearby_peers.append(body)
+
+func _on_separation_area_body_exited(body: Node2D) -> void:
+	if nearby_peers.has(body):
+		nearby_peers.erase(body)
