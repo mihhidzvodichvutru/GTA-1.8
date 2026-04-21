@@ -35,6 +35,7 @@ func _physics_process(delta):
 			
 		velocity = velocity.move_toward(move_dir * max_speed, luc_ap_dung * delta)
 	else:
+		# Khi nhả ga
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		
 	move_and_slide()
@@ -83,3 +84,19 @@ func chet(ly_do: String):
 		menu.show_final_menu() 
 	
 	get_tree().paused = true
+
+# --- HỆ THỐNG PHẠT NGUỘI VÀ TRUY NÃ ---
+var tien_mat: int = 500 # Cho Shipper ít tiền khởi nghiệp
+
+func bi_bat_loi_vuot_den():
+	print("Shipper: Chết dở, vượt đèn đỏ bị camera quay lại rồi!")
+	
+	# Ví dụ: Mỗi lần vượt đèn đỏ trừ 50 cành
+	if tien_mat >= 50:
+		tien_mat -= 50
+		print(">> Cảnh báo: Bạn đã bị trừ 50K tiền phạt. Số dư: ", tien_mat)
+	else:
+		tien_mat = 0
+		print(">> Cảnh báo: Đã nghèo còn dính phạt! Số dư: 0")
+		
+	# Sau này ông có thể thêm logic Tăng sao truy nã ở ngay trong hàm này luôn

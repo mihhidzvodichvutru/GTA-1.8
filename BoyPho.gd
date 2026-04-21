@@ -115,7 +115,7 @@ func _physics_process(delta: float) -> void:
 		if ke_bi_tong and ke_bi_tong.is_in_group("Player"):
 			print("✅ Đúng là Player rồi!")
 			
-			if thoi_gian_da_qua >= thoi_gian_hoi_chieu:
+		if thoi_gian_da_qua >= thoi_gian_hoi_chieu:
 				print("⏳ Đã hồi chiêu xong! Chuẩn bị cắn máu...")
 				
 				if ke_bi_tong.has_method("bi_tru_mau"):
@@ -124,7 +124,7 @@ func _physics_process(delta: float) -> void:
 				else:
 					print("❌ LỖI: Không tìm thấy hàm bi_tru_mau trong xe Shipper")
 					
-				thoi_gian_da_qua = 0.0
+			thoi_gian_da_qua = 0.0
 			else:
 				print("⌛ Đang hồi chiêu, chưa tông được tiếp...")
 
