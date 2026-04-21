@@ -110,8 +110,6 @@ func _physics_process(delta: float) -> void:
 		var ke_bi_tong = va_cham.get_collider()
 		
 		# --- BẮT ĐẦU DEBUG ---
-		print("💥 Vừa tông trúng: ", ke_bi_tong.name)
-		
 		if ke_bi_tong and ke_bi_tong.is_in_group("Player"):
 			print("✅ Đúng là Player rồi!")
 			

@@ -46,5 +46,12 @@ func _on_timer_timeout():
 
 func _on_area_2d_body_entered(body):
 	if current_state == State.DO and body.is_in_group("Player"):
+		print("🛑 Shipper vượt đèn đỏ!")
+		
+		# Gọi thẳng Tổng đài để tăng 1 sao và reset thời gian truy nã
+		if WantedManager.has_method("tang_sao"):
+			WantedManager.tang_sao()
+			
+		# Vẫn giữ lại hàm bắt lỗi nếu ông muốn Shipper bị trừ tiền riêng
 		if body.has_method("bi_bat_loi_vuot_den"):
 			body.bi_bat_loi_vuot_den()

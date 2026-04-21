@@ -8,8 +8,9 @@ extends CanvasLayer
 @onready var money_popup = $MoneyPopup
 @onready var theme_player = $ThemePlayer
 @onready var txt_so_du = $DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin/SoDuLabel
+@onready var cum_sao = $CumCoDinh/CumSao
 var is_phone_open = false
-
+var tween_nhap_nhay: Tween
 # Tọa độ Y của điện thoại (Ông tự căn chỉnh số này cho vừa mắt nhé)
 var y_mo_full = 100  # Khi mở lên (Điện thoại nằm giữa màn hình)
 var y_dong_gap = 600 # Khi giấu xuống (Chỉ thò đúng cái ThanhMau ra)
@@ -40,6 +41,10 @@ func _ready():
 	thanh_mau.value = 100
 	man_hinh_mo.material.set_shader_parameter("blur_amount", 0.0)
 	man_hinh_mo.visible = false
+
+	# Cập nhật kết nối tín hiệu (thêm tham số dang_lan_tron)
+	WantedManager.wanted_level_changed.connect(_on_cap_do_truy_na_thay_doi)
+	_on_cap_do_truy_na_thay_doi(0, false)
 
 func _input(event):
 	# Nếu bấm phím TAB (Ông nhớ vào Input Map tạo action "ui_tab" gán phím TAB nhé)
@@ -108,3 +113,26 @@ func _cap_nhat_mau(mau_moi: int):
 	# Dùng Tween để thanh máu tụt mượt mà chứ không bị giật cục
 	var t = create_tween()
 	t.tween_property(thanh_mau, "value", mau_moi, 0.3).set_trans(Tween.TRANS_SINE)
+
+func _on_cap_do_truy_na_thay_doi(level: int, dang_lan_tron: bool):
+	var cac_sao = cum_sao.get_children()
+	
+	# 1. Bật/Tắt các sao
+	for i in range(cac_sao.size()):
+		if i < level:
+			cac_sao[i].modulate = Color(1.0, 0.8, 0.0, 1.0) # Vàng
+		else:
+			cac_sao[i].modulate = Color(0.2, 0.2, 0.2, 0.5) # Xám mờ
+
+	# 2. Xử lý hiệu ứng Nhấp nháy
+	if tween_nhap_nhay:
+		tween_nhap_nhay.kill() # Dừng hiệu ứng cũ nếu có
+
+	if dang_lan_tron and level > 0:
+		# Tạo Tween chớp tắt toàn bộ cụm sao
+		tween_nhap_nhay = create_tween().set_loops()
+		tween_nhap_nhay.tween_property(cum_sao, "modulate:a", 0.3, 0.5)
+		tween_nhap_nhay.tween_property(cum_sao, "modulate:a", 1.0, 0.5)
+	else:
+		# Đảm bảo sao sáng lại bình thường nếu bị phát hiện lại hoặc bị xóa
+		cum_sao.modulate.a = 1.0

@@ -284,8 +284,6 @@ func _cap_nhat_vet_gps():
 	
 	# Tính toán đường đi
 	var duong_di = NavigationServer2D.map_get_path(map_rid, start_pos, target_pos, true)
-
-	print(">>> Số điểm GPS tính được: ", duong_di.size())
 	
 	# Bơm dữ liệu vào đường Line2D
 	if duong_di.size() > 0:

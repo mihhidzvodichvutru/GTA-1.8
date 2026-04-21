@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6t3ksspaqr3k" path="res://hud.gd" id="1_37p78"]
 [ext_resource type="Texture2D" uid="uid://dnbytpcumn853" path="res://Phone.png" id="2_64ctp"]
 [ext_resource type="Shader" uid="uid://c6mcaeijw55aq" path="res://hud.gdshader" id="2_a2258"]
+[ext_resource type="Texture2D" uid="uid://byvl6van854or" path="res://Star.png" id="3_1xsix"]
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_8sq4i"]
 [ext_resource type="AudioStream" uid="uid://g0jdbk8pbend" path="res://MissionPassed.mp3" id="5_a2258"]
 
@@ -60,10 +61,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxStars" type="HBoxContainer" parent="CumCoDinh" unique_id=302512376]
+[node name="CumSao" type="HBoxContainer" parent="CumCoDinh" unique_id=302512376]
 layout_mode = 1
-offset_right = 292.0
-offset_bottom = 72.0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 338.0
+offset_bottom = 69.0
+
+[node name="Star1" type="TextureRect" parent="CumCoDinh/CumSao" unique_id=1661172872]
+layout_mode = 2
+texture = ExtResource("3_1xsix")
+expand_mode = 2
+
+[node name="Star2" type="TextureRect" parent="CumCoDinh/CumSao" unique_id=1386523195]
+layout_mode = 2
+texture = ExtResource("3_1xsix")
+expand_mode = 2
+
+[node name="Star3" type="TextureRect" parent="CumCoDinh/CumSao" unique_id=2065611881]
+layout_mode = 2
+texture = ExtResource("3_1xsix")
+expand_mode = 2
+
+[node name="Star4" type="TextureRect" parent="CumCoDinh/CumSao" unique_id=1447601070]
+layout_mode = 2
+texture = ExtResource("3_1xsix")
+expand_mode = 2
+
+[node name="Star5" type="TextureRect" parent="CumCoDinh/CumSao" unique_id=1248693029]
+layout_mode = 2
+texture = ExtResource("3_1xsix")
+expand_mode = 2
 
 [node name="LblTimer" type="Label" parent="CumCoDinh" unique_id=3286083]
 layout_mode = 1
