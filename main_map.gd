@@ -22,6 +22,8 @@ extends Node2D
 @onready var tap_hop_diem_giao = $CacDiemGiaoHang.get_children() 
 var diem_giao_hien_tai: Node2D = null
 
+@onready var mui_ten_la_ban: Sprite2D = $MuiTenLaBan
+
 var astar_grid: AStarGrid2D
 
 # Nếu bạn chưa làm kịp giao diện hội thoại (DialogueUI), 
@@ -69,6 +71,22 @@ func _process(delta):
 		if camera_google_map:
 			camera_google_map.global_position = shipper.global_position
 			# Không cần set zoom ở đây nữa vì đã set cố định trong _ready rồi
+	# --- BỔ SUNG LA BÀN CHỈ ĐƯỜNG CHIM BAY ---
+	if shipper and diem_giao_hien_tai and mui_ten_la_ban:
+		mui_ten_la_ban.visible = true
+		
+		# 1. Tính toán HƯỚNG từ xe Shipper đến nhà khách hàng (Trả về Vector chuẩn hóa)
+		var huong_chi = shipper.global_position.direction_to(diem_giao_hien_tai.global_position)
+		
+		# 2. Đẩy mũi tên ra xa tâm Shipper đúng 150 pixel theo cái hướng vừa tính
+		var khoang_cach_quy_dao = 150.0 # Ông có thể tăng giảm số này cho vừa mắt
+		mui_ten_la_ban.global_position = shipper.global_position + (huong_chi * khoang_cach_quy_dao)
+		
+		# 3. Xoay góc của mũi tên cho khớp với hướng bay
+		mui_ten_la_ban.rotation = huong_chi.angle()
+		
+	elif mui_ten_la_ban:
+		mui_ten_la_ban.visible = false
 
 			
 
@@ -83,22 +101,21 @@ func _ready():
 		if child is Area2D and child.name.begins_with("Boundary"):
 			child.body_entered.connect(_on_boundary_entered)
 	
-	# 1. MÀN HÌNH CHÍNH (Người chơi): Thấy Map (1) và Model (2)
-	# Layer 1 + Layer 2 = Mask 3
+	# 1. MÀN HÌNH CHÍNH: Mask 3 (Layer 1 + 2) -> Vẫn tàng hình icon điểm đến
 	get_viewport().canvas_cull_mask = 3 
 
-	# 2. MINIMAP: Thấy Map (1), Icon Shipper (3) và Icon Kẻ địch (4)
-	# Layer 1 (1) + Layer 3 (4) + Layer 4 (8) = Mask 13
+	# 2. MINIMAP: Thấy Map(1), Shipper(4), Kẻ địch(8) và cả Điểm đến(32)
+	# Giá trị: 1 + 4 + 8 + 32 = 45
 	if minimap_viewport:
 		minimap_viewport.world_2d = get_viewport().world_2d
-		minimap_viewport.canvas_cull_mask = 13
+		minimap_viewport.canvas_cull_mask = 45
 
-	# 3. GOOGLE MAP: Thấy Map (1), Icon Shipper (4), VÀ ĐƯỜNG GPS (16)
-	# Giá trị: 1 + 4 + 16 = Mask 21
+	# 3. GOOGLE MAP: Thấy Map(1), Shipper(4), GPS(16) và Điểm đến(32)
+	# Giá trị: 1 + 4 + 16 + 32 = 53
 	if google_map_viewport:
 		google_map_viewport.world_2d = get_viewport().world_2d
-		google_map_viewport.canvas_cull_mask = 21 # Đổi số 5 thành 21
-		
+		google_map_viewport.canvas_cull_mask = 53 # Đổi từ 21 thành 53
+
 		if camera_google_map:
 			camera_google_map.zoom = Vector2(0.3, 0.3)
 		
@@ -214,6 +231,13 @@ func chon_diem_giao_moi():
 		diem_giao_hien_tai = tap_hop_diem_giao.pick_random()
 		print("📦 CÓ ĐƠN HÀNG MỚI! Điểm đến: ", diem_giao_hien_tai.name)
 		_cap_nhat_vet_gps() 
+	# Ẩn tất cả icon trước
+	for diem in tap_hop_diem_giao:
+		diem.get_child(0).visible = false 
+	
+	# Chọn điểm mới và hiện icon của nó lên
+	diem_giao_hien_tai = tap_hop_diem_giao.pick_random()
+	diem_giao_hien_tai.get_child(0).visible = true	
 
 func _cap_nhat_vet_gps():
 	if not shipper or not diem_giao_hien_tai: 
