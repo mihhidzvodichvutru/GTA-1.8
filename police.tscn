@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="1_efjuj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cw7eu"]
-radius = 19.416489
+radius = 20.09975
 
 [node name="Police" type="CharacterBody2D" unique_id=419289909]
 script = ExtResource("1_cw7eu")
@@ -21,9 +21,12 @@ shape = SubResource("CircleShape2D_cw7eu")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1492719303]
 target_desired_distance = 20.0
 path_postprocessing = 1
+avoidance_enabled = true
+radius = 21.0
 
 [node name="Timer" type="Timer" parent="." unique_id=2089995401]
 
 [node name="CatchArea" type="Area2D" parent="." unique_id=208544211]
 
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]
