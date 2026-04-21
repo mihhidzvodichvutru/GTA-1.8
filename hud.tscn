@@ -1,0 +1,216 @@
+[gd_scene format=3 uid="uid://c2jfrjtvg3jt8"]
+
+[ext_resource type="Script" uid="uid://6t3ksspaqr3k" path="res://hud.gd" id="1_37p78"]
+[ext_resource type="Texture2D" uid="uid://dnbytpcumn853" path="res://Phone.png" id="2_64ctp"]
+[ext_resource type="Shader" uid="uid://c6mcaeijw55aq" path="res://hud.gdshader" id="2_a2258"]
+[ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_8sq4i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a2258"]
+shader = ExtResource("2_a2258")
+shader_parameter/blur_amount = 2.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2258"]
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xsix"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8sq4i"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_640wx"]
+bg_color = Color(0.87734634, 4.0670484e-06, 1.92523e-07, 1)
+
+[node name="HUD" type="CanvasLayer" unique_id=2128169983]
+script = ExtResource("1_37p78")
+
+[node name="ManHinhMo" type="ColorRect" parent="." unique_id=936944277]
+material = SubResource("ShaderMaterial_a2258")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CumCoDinh" type="Control" parent="." unique_id=1322120249]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxStars" type="HBoxContainer" parent="CumCoDinh" unique_id=302512376]
+layout_mode = 1
+offset_right = 292.0
+offset_bottom = 72.0
+
+[node name="LblTimer" type="Label" parent="CumCoDinh" unique_id=3286083]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -199.0
+offset_bottom = 75.0
+grow_horizontal = 0
+
+[node name="KhungMinimap" type="Panel" parent="CumCoDinh" unique_id=599132130]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -213.0
+offset_right = 214.0
+offset_bottom = -13.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a2258")
+
+[node name="Minimap" type="SubViewportContainer" parent="CumCoDinh/KhungMinimap" unique_id=1929247568]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Minimap" type="SubViewport" parent="CumCoDinh/KhungMinimap/Minimap" unique_id=175051809]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera2D" type="Camera2D" parent="CumCoDinh/KhungMinimap/Minimap/Minimap" unique_id=23923396]
+
+[node name="Vien" type="Panel" parent="CumCoDinh/KhungMinimap" unique_id=171220678]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1xsix")
+
+[node name="DienThoai" type="Control" parent="." unique_id=1206484310]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -411.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="DienThoai" unique_id=1620048815]
+layout_mode = 0
+offset_left = 80.0
+offset_top = -29.0
+offset_right = 349.0
+offset_bottom = 579.0
+
+[node name="VoDienThoai" type="TextureRect" parent="DienThoai" unique_id=1600772066]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -161.0
+offset_top = -106.0
+offset_right = 187.0
+offset_bottom = 686.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_64ctp")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="DienThoai/VoDienThoai" unique_id=1051524994]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 77.0
+offset_right = 510.0
+offset_bottom = 685.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ManHinh" type="VBoxContainer" parent="DienThoai/VoDienThoai/MarginContainer" unique_id=1587702901]
+layout_mode = 2
+
+[node name="ThanhTrangThai" type="HBoxContainer" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh" unique_id=2017356727]
+layout_mode = 2
+
+[node name="Viettel_6G_Pin" type="Label" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai" unique_id=1579222670]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_8sq4i")
+theme_override_font_sizes/font_size = 12
+text = "  Viettel                                                             6G 🔋"
+
+[node name="Label" type="Label" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin" unique_id=805821338]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 23.0
+offset_right = 163.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_8sq4i")
+text = " Tình trạng"
+
+[node name="ThanhMau" type="ProgressBar" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin" unique_id=74007562]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -119.0
+offset_top = 47.0
+offset_right = 127.0
+offset_bottom = 66.0
+grow_horizontal = 2
+size_flags_vertical = 6
+theme_override_styles/background = SubResource("StyleBoxFlat_8sq4i")
+theme_override_styles/fill = SubResource("StyleBoxFlat_640wx")
+value = 100.0
+show_percentage = false
+
+[node name="GoogleMapContainer" type="SubViewportContainer" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin" unique_id=170608666]
+layout_mode = 0
+offset_top = 90.0
+offset_right = 247.0
+offset_bottom = 486.0
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin/GoogleMapContainer" unique_id=410042067]
+handle_input_locally = false
+size = Vector2i(247, 396)
+render_target_update_mode = 4
+
+[node name="CameraGoogleMap" type="Camera2D" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh/ThanhTrangThai/Viettel_6G_Pin/GoogleMapContainer/SubViewport" unique_id=628524400]
+
+[node name="ThongTin" type="HBoxContainer" parent="DienThoai/VoDienThoai/MarginContainer/ManHinh" unique_id=1099141871]
+layout_mode = 2

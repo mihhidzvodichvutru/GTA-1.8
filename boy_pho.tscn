@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://hwggdpj2o1kx"]
 
 [ext_resource type="Script" uid="uid://8x6idaktr1jo" path="res://BoyPho.gd" id="1_kscsk"]
-[ext_resource type="Texture2D" uid="uid://cvc77expxoyo3" path="res://icon.svg" id="2_lx5of"]
+[ext_resource type="Texture2D" uid="uid://xgc4fhtstjgy" path="res://nv.png" id="2_lx5of"]
+[ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="3_2qwgw"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7v856"]
-radius = 15.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lx5of"]
+radius = 4.0
+height = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qwgw"]
 radius = 214.11446
@@ -16,15 +18,21 @@ radius = 17.0
 collision_layer = 2
 script = ExtResource("1_kscsk")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=575199712]
-position = Vector2(-8.34465e-07, -0.4999991)
-scale = Vector2(0.171875, 0.1640625)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2095051779]
+visibility_layer = 2
+position = Vector2(-5.9604645e-05, 2.861023e-06)
+rotation = 3.1415927
+scale = Vector2(0.33333513, 0.37755173)
 texture = ExtResource("2_lx5of")
+region_enabled = true
+region_rect = Rect2(41.471416, 95.3425, 27.71288, 49.875885)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=52155276]
-shape = SubResource("CircleShape2D_7v856")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971973891]
+rotation = 3.1415927
+shape = SubResource("CapsuleShape2D_lx5of")
 
 [node name="AggroArea" type="Area2D" parent="." unique_id=651184737]
+scale = Vector2(0.5, 0.5)
 collision_mask = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AggroArea" unique_id=1264314766]
@@ -45,6 +53,14 @@ target_position = Vector2(25, -1)
 [node name="RayRight" type="RayCast2D" parent="." unique_id=416375818]
 rotation = 0.7853982
 target_position = Vector2(20.5061, 0.7071066)
+
+[node name="MuiTenIcon" type="Sprite2D" parent="." unique_id=2090531749]
+modulate = Color(1, 0, 0, 1)
+visibility_layer = 8
+position = Vector2(0, -7.6293945e-06)
+rotation = -1.5707964
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("3_2qwgw")
 
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]

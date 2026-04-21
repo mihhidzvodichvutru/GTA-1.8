@@ -1,14 +1,20 @@
 extends CharacterBody2D
 
-# Đệ tăng steer_force mặc định lên cao hơn một chút, vì ta sẽ đồng bộ nó với delta
-@export var speed: float = 150
-@export var steer_force: float = 10.0 # Mức 5.0 - 10.0 là bao mượt khi chạy với delta
+@export var speed: float = 90
+@export var steer_force: float = 10.0
 
-# Biến đệm để làm mượt lực dạt tường
+@export var sat_thuong: int = 10
+@export var thoi_gian_hoi_chieu: float = 1.0 
+var thoi_gian_da_qua: float = 0.0
+
 var current_avoid_dir: Vector2 = Vector2.ZERO
-
 var target_player: Node2D = null
-var is_chasing: bool = false
+
+# --- 1. HỆ THỐNG MÁY TRẠNG THÁI ---
+enum State { WANDER, CHASE }
+var current_state = State.WANDER
+var wander_dir: Vector2 = Vector2.ZERO
+var time_to_change_dir: float = 0.0
 
 @onready var aggro_area = $AggroArea
 @onready var ray_left = $RayLeft
@@ -17,83 +23,107 @@ var is_chasing: bool = false
 
 func _ready() -> void:
 	add_to_group("Enemy")
+	_pick_new_wander_dir() # Bắt đầu game là đi dạo luôn
 	
 	if aggro_area:
+		# Kẻ địch được spawn ra kiểm tra xem nếu chưa kết nối thì mới kết nối
 		if not aggro_area.body_entered.is_connected(_on_aggro_area_body_entered):
 			aggro_area.body_entered.connect(_on_aggro_area_body_entered)
 		if not aggro_area.body_exited.is_connected(_on_aggro_area_body_exited):
 			aggro_area.body_exited.connect(_on_aggro_area_body_exited)
 
+# Hàm random hướng đi lúc rảnh rỗi
+func _pick_new_wander_dir():
+	var random_angle = randf() * PI * 2
+	wander_dir = Vector2(cos(random_angle), sin(random_angle))
+	time_to_change_dir = randf_range(2.0, 5.0) # Đi thẳng 2-5 giây rồi mới bẻ lái
+
 func _physics_process(delta: float) -> void:
-	if is_chasing and target_player != null:
-		
-		# --- FIX LỖI VĂNG XE KHI ÁP SÁT ĐUÔI ---
-		var distance = global_position.distance_to(target_player.global_position)
-		var desired_dir = Vector2.ZERO
-		
-		if distance > 45.0: # Huynh có thể tăng giảm số 45 này cho vừa với thân xe
-			# Khi ở xa: Nhắm thẳng vào tâm Shipper
-			desired_dir = global_position.direction_to(target_player.global_position)
-		else:
-			# Khi áp sát: Khóa vô lăng, giữ nguyên hướng lao tới để húc, 
-			# không để vector bị bẻ ngoắt 90 độ khi chênh lệch 1-2 pixel
-			if velocity.length() > 0:
-				desired_dir = velocity.normalized()
-		# ----------------------------------------
-		
-		# Chỉ xoay râu khi thực sự có vận tốc (> 10) để tránh bị giật cục xoay vòng lúc mới khởi động
-		if velocity.length() > 10.0:
-			var angle = velocity.angle()
-			ray_left.rotation = angle - deg_to_rad(45)
-			ray_center.rotation = angle
-			ray_right.rotation = angle + deg_to_rad(45)
-			
-			# Cập nhật va chạm ngay lập tức trong frame hiện tại chống dịch chuyển tức thời
-			ray_left.force_raycast_update()
-			ray_center.force_raycast_update()
-			ray_right.force_raycast_update()
+	thoi_gian_da_qua += delta
 
-		var target_avoid_dir = Vector2.ZERO 
-		
-		# Lấy hướng pháp tuyến của bức tường nếu có va chạm
-		if ray_center.is_colliding():
-			target_avoid_dir = ray_center.get_collision_normal()
-		elif ray_left.is_colliding():
-			target_avoid_dir = ray_left.get_collision_normal()
-		elif ray_right.is_colliding():
-			target_avoid_dir = ray_right.get_collision_normal()
+	# --- 2. HỆ THỐNG DESPAWN THÔNG MINH ---
+	# Tự tìm Shipper để đo khoảng cách, quá 2500px thì tự sát cho nhẹ máy
+	var players = get_tree().get_nodes_in_group("Player")
+	if players.size() > 0:
+		if global_position.distance_to(players[0].global_position) > 2500.0:
+			queue_free()
+			return
 
-		# LERP LỰC DẠT TƯỜNG: Đây là mấu chốt để hết bị giật
-		current_avoid_dir = current_avoid_dir.lerp(target_avoid_dir, 15.0 * delta)
+	var desired_dir = Vector2.ZERO
+	var current_speed = speed
 
-		var final_dir = desired_dir
-		
-		# Chỉ bẻ lái dạt ra khi lực đệm (current_avoid_dir) vẫn còn tồn tại
-		if current_avoid_dir.length() > 0.01:
-			final_dir = (desired_dir + current_avoid_dir * 2.5).normalized()
-		
-		# Phải nhân steer_force với delta để không bị bẻ lái quá gắt theo số Frame
-		velocity = velocity.lerp(final_dir * speed, steer_force * delta)
-		
-		move_and_slide()
-	else:
-		# Giảm tốc từ từ khi mất dấu Shipper
-		velocity = velocity.lerp(Vector2.ZERO, 5.0 * delta)
-		move_and_slide()
+	# --- 3. XỬ LÝ TRẠNG THÁI ---
+	match current_state:
+		State.WANDER:
+			current_speed = speed * 0.4 # Đi lượn lờ thì đi chậm thôi (40% tốc độ)
+			time_to_change_dir -= delta
+			if time_to_change_dir <= 0:
+				_pick_new_wander_dir()
+			desired_dir = wander_dir
 
-# --- Các hàm nhận tín hiệu giữ nguyên ---
-func start_chasing(player):
-	target_player = player
-	is_chasing = true
+		State.CHASE:
+			if target_player != null:
+				current_speed = speed # Đuổi thì vặn max ga
+				var distance = global_position.distance_to(target_player.global_position)
+				if distance > 45.0: 
+					desired_dir = global_position.direction_to(target_player.global_position)
+				else:
+					if velocity.length() > 0:
+						desired_dir = velocity.normalized()
+			else:
+				current_state = State.WANDER # Mất dấu thì đi lượn tiếp
 
+	# --- 4. HỆ THỐNG NÉ TƯỜNG DÙNG CHUNG ---
+	# (Cho cả lúc đi dạo và rượt đuổi)
+	if velocity.length() > 5.0:
+		ray_left.force_raycast_update()
+		ray_center.force_raycast_update()
+		ray_right.force_raycast_update()
+
+	var target_avoid_dir = Vector2.ZERO 
+	if ray_center.is_colliding():
+		target_avoid_dir = ray_center.get_collision_normal()
+	elif ray_left.is_colliding():
+		target_avoid_dir = ray_left.get_collision_normal()
+	elif ray_right.is_colliding():
+		target_avoid_dir = ray_right.get_collision_normal()
+
+	current_avoid_dir = current_avoid_dir.lerp(target_avoid_dir, 15.0 * delta)
+	var final_dir = desired_dir
+	
+	if current_avoid_dir.length() > 0.01:
+		final_dir = (desired_dir + current_avoid_dir * 2.5).normalized()
+		# Nếu đang đi dạo mà đập mặt vào tường -> Dội lại và đổi hướng dạo
+		if current_state == State.WANDER and target_avoid_dir != Vector2.ZERO:
+			wander_dir = current_avoid_dir
+
+	velocity = velocity.lerp(final_dir * current_speed, steer_force * delta)
+
+	if velocity.length() > 5.0:
+		rotation = velocity.angle() + PI / 2
+
+	move_and_slide()
+	
+	# --- 5. VA CHẠM TRỪ MÁU (Giữ nguyên) ---
+	for i in get_slide_collision_count():
+		var va_cham = get_slide_collision(i)
+		var ke_bi_tong = va_cham.get_collider()
+		
+		if ke_bi_tong and ke_bi_tong.is_in_group("Player"):
+			if thoi_gian_da_qua >= thoi_gian_hoi_chieu:
+				if ke_bi_tong.has_method("bi_tru_mau"):
+					ke_bi_tong.bi_tru_mau(sat_thuong)
+				thoi_gian_da_qua = 0.0
+
+# --- 6. TÍN HIỆU TẦM NHÌN (Đã xóa cái Hive Mind) ---
 func _on_aggro_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
 		target_player = body
-		is_chasing = true
-		get_tree().call_group("Enemy", "start_chasing", body)
+		current_state = State.CHASE
+		# Đã xóa dòng get_tree().call_group ở đây!
 
 func _on_aggro_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		print(">>> Shipper đã chạy thoát khỏi tầm nhìn.")
+		print(">>> Shipper đã cắt đuôi thành công.")
 		target_player = null
-		is_chasing = false
+		current_state = State.WANDER
