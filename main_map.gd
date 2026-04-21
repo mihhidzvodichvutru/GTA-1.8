@@ -3,7 +3,7 @@ extends Node2D
 # ==========================================
 # PHẦN 1: CÁC BIẾN CỦA HỆ THỐNG
 # ==========================================
-@onready var tile_map: TileMapLayer = $TileMapLayer 
+@onready var tile_map: TileMapLayer = $NavigationRegion2D/TileMapLayer
 var astar_grid: AStarGrid2D
 
 # Nếu bạn chưa làm kịp giao diện hội thoại (DialogueUI), 
