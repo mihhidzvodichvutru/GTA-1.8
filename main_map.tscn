@@ -4115,7 +4115,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("2_ob7o4")
 metadata/_edit_lock_ = true
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345 groups=["Player"]]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345]
 navigation_polygon = SubResource("NavigationPolygon_qu338")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D" unique_id=1499468314]
@@ -4163,6 +4163,7 @@ stream = ExtResource("10_1k36j")
 
 [node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
 position = Vector2(-1125, -359)
+collision_mask = 1
 
 [node name="HUD" parent="." unique_id=2128169983 instance=ExtResource("8_hio4h")]
 
