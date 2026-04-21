@@ -4146,6 +4146,7 @@ zoom = Vector2(2, 2)
 
 [node name="MuiTenIcon" type="Sprite2D" parent="Shipper" unique_id=2100318889]
 visibility_layer = 4
+z_index = 20
 position = Vector2(0, -7.6293945e-06)
 rotation = -1.5707964
 scale = Vector2(0.07, 0.07)
@@ -4182,6 +4183,38 @@ position = Vector2(-1125, -359)
 
 [node name="HUD" parent="." unique_id=2128169983 instance=ExtResource("8_hio4h")]
 
+[node name="CacDiemGiaoHang" type="Node2D" parent="." unique_id=1651845183]
+
+[node name="Nha1" type="Marker2D" parent="CacDiemGiaoHang" unique_id=1270936683]
+position = Vector2(-2752, -274)
+
+[node name="Nha2" type="Marker2D" parent="CacDiemGiaoHang" unique_id=908594836]
+position = Vector2(2028, 747)
+
+[node name="Nha3" type="Marker2D" parent="CacDiemGiaoHang" unique_id=1306368503]
+position = Vector2(2373, -1241)
+
+[node name="Nha4" type="Marker2D" parent="CacDiemGiaoHang" unique_id=338540538]
+position = Vector2(-2804, 715)
+
+[node name="Nha5" type="Marker2D" parent="CacDiemGiaoHang" unique_id=861074174]
+position = Vector2(-293, 1205)
+
+[node name="Nha6" type="Marker2D" parent="CacDiemGiaoHang" unique_id=507436721]
+position = Vector2(-549, -788)
+
+[node name="Nha7" type="Marker2D" parent="CacDiemGiaoHang" unique_id=509095967]
+position = Vector2(1413, -771)
+
+[node name="VetGPS" type="Line2D" parent="." unique_id=2145856316]
+top_level = true
+visibility_layer = 16
+z_index = 10
+default_color = Color(0.274039, 0.45586795, 0.9999798, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
 [node name="HeThongDen" type="Node2D" parent="." unique_id=1740681990]
 
 [node name="DenGiaoThong" parent="HeThongDen" unique_id=39744397 instance=ExtResource("10_4ly05")]

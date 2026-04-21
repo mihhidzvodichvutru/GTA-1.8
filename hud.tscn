@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a2258"]
 shader = ExtResource("2_a2258")
-shader_parameter/blur_amount = 2.5
+shader_parameter/blur_amount = 5.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a2258"]
 border_width_left = 5
