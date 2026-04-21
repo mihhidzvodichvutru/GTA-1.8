@@ -22,9 +22,12 @@ func _ready():
 
 func _process(_delta):
 	label.text = str(ceil(timer.time_left))
-	if current_state == State.XANH: label.modulate = Color.GREEN
-	elif current_state == State.VANG: label.modulate = Color.YELLOW
-	else: label.modulate = Color.RED
+	if current_state == State.XANH: 
+		label.modulate = Color.GREEN
+	elif current_state == State.VANG: 
+		label.modulate = Color.YELLOW
+	else: 
+		label.modulate = Color.RED
 
 func _chuyen_trang_thai(new_state):
 	current_state = new_state
@@ -40,11 +43,25 @@ func _chuyen_trang_thai(new_state):
 			sprite.frame = 2 
 
 func _on_timer_timeout():
-	if current_state == State.XANH: _chuyen_trang_thai(State.VANG)
-	elif current_state == State.VANG: _chuyen_trang_thai(State.DO)
-	else: _chuyen_trang_thai(State.XANH)
+	if current_state == State.XANH: 
+		_chuyen_trang_thai(State.VANG)
+	elif current_state == State.VANG: 
+		_chuyen_trang_thai(State.DO)
+	else: 
+		_chuyen_trang_thai(State.XANH)
 
-func _on_area_2d_body_entered(body):
+# --- GIỮ NGUYÊN TÊN HÀM THEO Ý ÔNG ---
+func _on_khu_vuc_nga_tu_body_entered(body):
+	# 1. Chỉ bắt lỗi khi Đang Đèn Đỏ VÀ thằng đâm vào thuộc group "Player"
 	if current_state == State.DO and body.is_in_group("Player"):
+		print("Camera: Phát hiện vượt đèn đỏ! Chuẩn bị gửi giấy phạt...")
+		
+		# 2. Báo cho Shipper biết để nó trừ tiền
 		if body.has_method("bi_bat_loi_vuot_den"):
-			body.bi_bat_loi_vuot_den()
+			body.bi_bat_loi_vuot_den() 
+			
+		# 3. GỌI TỔNG ĐÀI: Tăng 1 sao truy nã và gán "body" (Shipper) làm mục tiêu
+		if has_node("/root/WantedManager"):
+			WantedManager.tang_sao_truy_na(1, body)
+		else:
+			print("LỖI KHẨN CẤP: Không tìm thấy Tổng đài WantedManager!")
