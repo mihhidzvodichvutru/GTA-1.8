@@ -45,3 +45,19 @@ func bi_tru_mau(luong_sat_thuong: int):
 	if mau_hien_tai <= 0:
 		print("Game Over!")
 		# Sau này ông gọi màn hình Game Over ở đây
+		
+		# --- HỆ THỐNG PHẠT NGUỘI VÀ TRUY NÃ ---
+var tien_mat: int = 500 # Cho Shipper ít tiền khởi nghiệp
+
+func bi_bat_loi_vuot_den():
+	print("Shipper: Chết dở, vượt đèn đỏ bị camera quay lại rồi!")
+	
+	# Ví dụ: Mỗi lần vượt đèn đỏ trừ 50 cành
+	if tien_mat >= 50:
+		tien_mat -= 50
+		print(">> Cảnh báo: Bạn đã bị trừ 50K tiền phạt. Số dư: ", tien_mat)
+	else:
+		tien_mat = 0
+		print(">> Cảnh báo: Đã nghèo còn dính phạt! Số dư: 0")
+		
+	# Sau này ông có thể thêm logic Tăng sao truy nã ở ngay trong hàm này luôn
