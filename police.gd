@@ -47,8 +47,6 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 # Tách phần di chuyển và xoay mặt ra một hàm riêng cho gọn
 func _apply_movement():
 	if velocity.length() > 0:
-		rotation = velocity.angle()
+		# Đã đổi thành - PI / 2 dành cho trường hợp đầu xe chĩa XUỐNG DƯỚI
+		rotation = velocity.angle() - PI / 2
 	move_and_slide()
-
-# (Giữ nguyên hàm _on_catch_area_body_entered của ông ở dưới đây)
-# ...
