@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dard4m1rm3dwi" path="res://dengt.png" id="2_euwnj"]
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_rlrar"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_deqom"]
-size = Vector2(10, 79.75)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmsi6"]
+size = Vector2(254, 181.25)
 
 [node name="DenGiaoThong" type="Node2D" unique_id=39744397]
 position = Vector2(558, 281)
@@ -28,11 +28,10 @@ theme_override_fonts/font = ExtResource("3_rlrar")
 text = "10"
 metadata/_edit_use_anchors_ = true
 
-[node name="Area2D" type="Area2D" parent="." unique_id=788256721]
+[node name="KhuVucNgaTu" type="Area2D" parent="." unique_id=788256721]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=695585983]
-position = Vector2(0, 54.125)
-shape = SubResource("RectangleShape2D_deqom")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KhuVucNgaTu" unique_id=1313013561]
+shape = SubResource("RectangleShape2D_dmsi6")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="KhuVucNgaTu" to="." method="_on_khu_vuc_nga_tu_body_entered"]
