@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dcyodg2t4kdoj" path="res://duong2.png" id="5_286o7"]
 [ext_resource type="PackedScene" uid="uid://hwggdpj2o1kx" path="res://boy_pho.tscn" id="5_v4mvp"]
 [ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="7_fnffn"]
-[ext_resource type="PackedScene" path="res://hud.tscn" id="8_hio4h"]
+[ext_resource type="PackedScene" uid="uid://c2jfrjtvg3jt8" path="res://hud.tscn" id="8_hio4h"]
 [ext_resource type="PackedScene" uid="uid://dmmjdgexr65yu" path="res://dengiaothong.tscn" id="10_4ly05"]
 [ext_resource type="Texture2D" uid="uid://clkrti1acm2i2" path="res://Marker.png" id="10_t3ofs"]
 [ext_resource type="Texture2D" uid="uid://dw1vk8exrtspq" path="res://Arrow.png" id="12_t3ofs"]
@@ -4107,7 +4107,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("2_ob7o4")
 metadata/_edit_lock_ = true
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345 groups=["CanhSat", "Player"]]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345 groups=["CanhSat"]]
 navigation_polygon = SubResource("NavigationPolygon_qu338")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D" unique_id=1499468314]
