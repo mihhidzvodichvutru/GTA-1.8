@@ -4255,18 +4255,14 @@ position = Vector2(-917, -906)
 rotation = 1.5599393
 do_tre_ban_dau = 13.0
 
-[node name="DenGiaoThong5" parent="HeThongDen" unique_id=321076091 instance=ExtResource("10_4ly05")]
-position = Vector2(-1197, -903)
-rotation = 4.693234
-do_tre_ban_dau = 13.0
+[node name="CollisionShape2D" parent="HeThongDen/DenGiaoThong4/Area2D" parent_id_path=PackedInt32Array(382669565, 788256721) index="0" unique_id=695585983]
+position = Vector2(0, 141.13867)
+shape = SubResource("RectangleShape2D_286o7")
 
 [node name="MuiTenLaBan" type="Sprite2D" parent="." unique_id=1212550578]
 visibility_layer = 16
 z_index = 15
 scale = Vector2(0.01, 0.01)
 texture = ExtResource("12_t3ofs")
-[node name="CollisionShape2D" parent="HeThongDen/DenGiaoThong4/Area2D" parent_id_path=PackedInt32Array(382669565, 788256721) index="0" unique_id=695585983]
-position = Vector2(0, 141.13867)
-shape = SubResource("RectangleShape2D_286o7")
 
 [editable path="HeThongDen/DenGiaoThong4"]
