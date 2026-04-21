@@ -18,6 +18,10 @@ extends Node2D
 @export var boy_pho_scene: PackedScene 
 @export var so_luong_toi_da: int = 15 # Tránh spam hàng trăm con gây lag máy
 
+@onready var vet_gps: Line2D = $VetGPS
+@onready var tap_hop_diem_giao = $CacDiemGiaoHang.get_children() 
+var diem_giao_hien_tai: Node2D = null
+
 var astar_grid: AStarGrid2D
 
 # Nếu bạn chưa làm kịp giao diện hội thoại (DialogueUI), 
@@ -89,14 +93,14 @@ func _ready():
 		minimap_viewport.world_2d = get_viewport().world_2d
 		minimap_viewport.canvas_cull_mask = 13
 
-	# 3. GOOGLE MAP: CHỈ thấy Map (1) và Icon Shipper (3)
-	# Layer 1 (1) + Layer 3 (4) = Mask 5 -> TỰ ĐỘNG ẨN HẾT KẺ ĐỊCH
+	# 3. GOOGLE MAP: Thấy Map (1), Icon Shipper (4), VÀ ĐƯỜNG GPS (16)
+	# Giá trị: 1 + 4 + 16 = Mask 21
 	if google_map_viewport:
 		google_map_viewport.world_2d = get_viewport().world_2d
-		google_map_viewport.canvas_cull_mask = 5
+		google_map_viewport.canvas_cull_mask = 21 # Đổi số 5 thành 21
 		
 		if camera_google_map:
-			camera_google_map.zoom = Vector2(0.4, 0.4)
+			camera_google_map.zoom = Vector2(0.3, 0.3)
 		
 	# Đảm bảo mũi tên bị ẩn lúc mới vào game
 	if icon_mui_ten:
@@ -105,6 +109,14 @@ func _ready():
 	if camera_shipper:
 		camera_shipper.make_current()
 	_khoi_dong_spawner()
+
+	chon_diem_giao_moi() # Random đơn hàng đầu tiên
+	
+	var gps_timer = Timer.new()
+	gps_timer.wait_time = 0.1
+	gps_timer.autostart = true
+	gps_timer.timeout.connect(_cap_nhat_vet_gps)
+	add_child(gps_timer)
 
 func _khoi_dong_spawner():
 	await get_tree().physics_frame # Chờ mảng xanh load xong
@@ -195,3 +207,32 @@ func _thu_spawn_boy_pho():
 			else:
 				# Chỗ này kẹt tường -> Xóa sổ cái xác này ngay lập tức!
 				boy.free()
+
+# Hàm này dùng để random một điểm đến mới
+func chon_diem_giao_moi():
+	if tap_hop_diem_giao.size() > 0:
+		diem_giao_hien_tai = tap_hop_diem_giao.pick_random()
+		print("📦 CÓ ĐƠN HÀNG MỚI! Điểm đến: ", diem_giao_hien_tai.name)
+		_cap_nhat_vet_gps() 
+
+func _cap_nhat_vet_gps():
+	if not shipper or not diem_giao_hien_tai: 
+		vet_gps.points = []
+		return
+		
+	var start_pos = shipper.global_position
+	var target_pos = diem_giao_hien_tai.global_position
+	var map_rid = get_world_2d().navigation_map
+	
+	# Tính toán đường đi
+	var duong_di = NavigationServer2D.map_get_path(map_rid, start_pos, target_pos, true)
+
+	print(">>> Số điểm GPS tính được: ", duong_di.size())
+	
+	# Bơm dữ liệu vào đường Line2D
+	if duong_di.size() > 0:
+		vet_gps.points = duong_di
+	else:
+		# FALLBACK: Nếu mảng xanh bị đứt hoàn toàn không nối được, 
+		# vẽ một đường thẳng tắp từ xe đến thẳng nhà khách hàng (đường chim bay)
+		vet_gps.points = [start_pos, target_pos]
