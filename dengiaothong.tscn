@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dmmjdgexr65yu"]
+
+[ext_resource type="Script" uid="uid://dh0mmpt5en75v" path="res://dengiaothong.gd" id="1_dmsi6"]
+[ext_resource type="Texture2D" uid="uid://dard4m1rm3dwi" path="res://dengt.png" id="2_euwnj"]
+[ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_rlrar"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_deqom"]
+size = Vector2(10, 67.5)
+
+[node name="DenGiaoThong" type="Node2D" unique_id=39744397]
+position = Vector2(558, 281)
+script = ExtResource("1_dmsi6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=153552218]
+position = Vector2(8.34465e-07, -9.536743e-07)
+scale = Vector2(2.5, 2.75)
+texture = ExtResource("2_euwnj")
+hframes = 3
+
+[node name="Timer" type="Timer" parent="." unique_id=616853547]
+
+[node name="Label" type="Label" parent="." unique_id=1876207660]
+offset_left = 23.0
+offset_top = -12.0
+offset_right = 39.0
+offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("3_rlrar")
+text = "10"
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=788256721]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=695585983]
+position = Vector2(0, 48)
+shape = SubResource("RectangleShape2D_deqom")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
