@@ -168,7 +168,7 @@ func _on_boundary_entered(body: Node2D):
 		
 	elif body.is_in_group("NPC"):
 		body.queue_free()
-		print("Đã xóa 1 NPC đi quá giới hạn bản đồ!")
+		print("Đã xóa 1 NPC đi quá giới hạn bản đồ")
 
 func trigger_boundary_turn_around(shipper_node: Node2D):
 	print("Shipper đã chạm rìa map! Đang xử lý quay đầu...")
