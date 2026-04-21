@@ -39,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		# Hợp lực: Đuổi theo + Đẩy nhau ra
 		desired_velocity = (pursuit_dir + sep_dir).normalized() * speed
 
+<<<<<<< HEAD
 	# Áp dụng gia tốc để bẻ lái mượt
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	
@@ -64,3 +65,11 @@ func _on_separation_entered(body):
 
 func _on_separation_exited(body):
 	nearby_peers.erase(body)
+=======
+# Tách phần di chuyển và xoay mặt ra một hàm riêng cho gọn
+func _apply_movement():
+	if velocity.length() > 0:
+		# Đã đổi thành - PI / 2 dành cho trường hợp đầu xe chĩa XUỐNG DƯỚI
+		rotation = velocity.angle() - PI / 2
+	move_and_slide()
+>>>>>>> f29a7fcd32ccec941b4cb0da8f32ec0f3fb4c120
