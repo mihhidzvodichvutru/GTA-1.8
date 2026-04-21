@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed: float = 90
 @export var steer_force: float = 10.0
-@export var separation_weight: float = 2.0 # Thêm trọng số tách bầy để đẩy nhau ra
+@export var separation_weight: float = 2.0 # Trọng số tách bầy
 
 @export var sat_thuong: int = 10
 @export var thoi_gian_hoi_chieu: float = 1.0 
@@ -10,7 +10,7 @@ var thoi_gian_da_qua: float = 0.0
 
 var current_avoid_dir: Vector2 = Vector2.ZERO
 var target_player: Node2D = null
-var nearby_peers: Array = [] # Cái túi để đựng đồng bọn, giúp không bị dẫm chân
+var nearby_peers: Array = [] # Cái túi đựng đồng bọn
 
 # --- 1. HỆ THỐNG MÁY TRẠNG THÁI ---
 enum State { WANDER, CHASE }
@@ -25,26 +25,23 @@ var time_to_change_dir: float = 0.0
 
 func _ready() -> void:
 	add_to_group("Enemy")
-	_pick_new_wander_dir() # Bắt đầu game là đi dạo luôn
+	_pick_new_wander_dir() 
 	
 	if aggro_area:
-		# Kẻ địch được spawn ra kiểm tra xem nếu chưa kết nối thì mới kết nối
 		if not aggro_area.body_entered.is_connected(_on_aggro_area_body_entered):
 			aggro_area.body_entered.connect(_on_aggro_area_body_entered)
 		if not aggro_area.body_exited.is_connected(_on_aggro_area_body_exited):
 			aggro_area.body_exited.connect(_on_aggro_area_body_exited)
 
-# Hàm random hướng đi lúc rảnh rỗi
 func _pick_new_wander_dir():
 	var random_angle = randf() * PI * 2
 	wander_dir = Vector2(cos(random_angle), sin(random_angle))
-	time_to_change_dir = randf_range(2.0, 5.0) # Đi thẳng 2-5 giây rồi mới bẻ lái
+	time_to_change_dir = randf_range(2.0, 5.0) 
 
 func _physics_process(delta: float) -> void:
 	thoi_gian_da_qua += delta
 
 	# --- 2. HỆ THỐNG DESPAWN THÔNG MINH ---
-	# Tự tìm Shipper để đo khoảng cách, quá 2500px thì tự sát cho nhẹ máy
 	var players = get_tree().get_nodes_in_group("Player")
 	if players.size() > 0:
 		if global_position.distance_to(players[0].global_position) > 2500.0:
@@ -57,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	# --- 3. XỬ LÝ TRẠNG THÁI ---
 	match current_state:
 		State.WANDER:
-			current_speed = speed * 0.4 # Đi lượn lờ thì đi chậm thôi (40% tốc độ)
+			current_speed = speed * 0.4 
 			time_to_change_dir -= delta
 			if time_to_change_dir <= 0:
 				_pick_new_wander_dir()
@@ -65,7 +62,7 @@ func _physics_process(delta: float) -> void:
 
 		State.CHASE:
 			if target_player != null:
-				current_speed = speed # Đuổi thì vặn max ga
+				current_speed = speed 
 				var distance = global_position.distance_to(target_player.global_position)
 				if distance > 45.0: 
 					desired_dir = global_position.direction_to(target_player.global_position)
@@ -73,7 +70,7 @@ func _physics_process(delta: float) -> void:
 					if velocity.length() > 0:
 						desired_dir = velocity.normalized()
 			else:
-				current_state = State.WANDER # Mất dấu thì đi lượn tiếp
+				current_state = State.WANDER 
 
 	# --- 4. HỆ THỐNG NÉ TƯỜNG DÙNG CHUNG ---
 	if velocity.length() > 5.0:
@@ -91,42 +88,52 @@ func _physics_process(delta: float) -> void:
 
 	current_avoid_dir = current_avoid_dir.lerp(target_avoid_dir, 15.0 * delta)
 	
-	# --- 4.5. TÍNH TOÁN LỰC ĐẨY NHAU (SEPARATION) ---
+	# ==========================================
+	# --- 4.5. TÍNH TOÁN LỰC ĐẨY NHAU (ĐÃ FIX) ---
+	# ==========================================
 	var separation_dir = Vector2.ZERO
 	for peer in nearby_peers:
-		if is_instance_valid(peer): # Đảm bảo thằng kia chưa chết
+		if is_instance_valid(peer) and peer != self: 
 			var diff = global_position - peer.global_position
 			var dist = diff.length()
-			if dist > 0:
-				# Toán học: Càng gần càng đẩy mạnh
-				separation_dir += (diff.normalized() / dist) * 100
-	separation_dir *= separation_weight
+			
+			# Lỗi chia cho 0: Nếu 2 con spawn đè lên nhau y hệt, dist = 0 sẽ làm game lỗi
+			if dist == 0:
+				# Tạo một hướng đẩy ngẫu nhiên để chúng tách ra ngay lập tức
+				diff = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0))
+				dist = 0.1 
+			
+			# Chỉ đẩy nhau khi lại quá gần (khoảng cách < 50 pixel)
+			if dist < 50.0:
+				# Công thức mới: Càng gần đẩy càng mạnh, lực đẩy mượt hơn
+				separation_dir += (diff.normalized() * (50.0 / dist))
+				
+	# Giới hạn lực đẩy tối đa để tụi nó không bị văng đi quá mạnh
+	if separation_dir.length() > 0:
+		separation_dir = separation_dir.limit_length(5.0) 
+		separation_dir *= separation_weight
 	
 	# --- TỔNG HỢP CÁC LỰC ---
 	var final_dir = desired_dir
 	
-	# Cộng lực né tường
 	if current_avoid_dir.length() > 0.01:
 		final_dir = (desired_dir + current_avoid_dir * 2.5).normalized()
-		# Nếu đang đi dạo mà đập mặt vào tường -> Dội lại và đổi hướng dạo
 		if current_state == State.WANDER and target_avoid_dir != Vector2.ZERO:
 			wander_dir = current_avoid_dir
 
-	# Cộng lực tách bầy
+	# Cộng lực tách bầy vào hướng đi chính
 	if separation_dir.length() > 0:
 		final_dir = (final_dir + separation_dir).normalized()
 
-	# Áp dụng gia tốc
 	velocity = velocity.lerp(final_dir * current_speed, steer_force * delta)
 
-	# --- FIX LỖI CHẠY NGANG ---
-	# Tôi đã bỏ cái "+ PI / 2" ở đây. Nó sẽ quay đúng theo hướng Vector vận tốc.
+	# --- FIX LỖI CHẠY NGANG (Giữ nguyên của ông) ---
 	if velocity.length() > 5.0:
 		rotation = velocity.angle()
 
 	move_and_slide()
 	
-	# --- 5. VA CHẠM TRỪ MÁU (Giữ nguyên) ---
+	# --- 5. VA CHẠM TRỪ MÁU ---
 	for i in get_slide_collision_count():
 		var va_cham = get_slide_collision(i)
 		var ke_bi_tong = va_cham.get_collider()
@@ -145,13 +152,11 @@ func _on_aggro_area_body_entered(body: Node2D) -> void:
 
 func _on_aggro_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		print(">>> Shipper đã cắt đuôi thành công.")
 		target_player = null
 		current_state = State.WANDER
 
-# --- 7. TÍN HIỆU TÁCH BẦY (ĐÃ LẤP ĐẦY) ---
+# --- 7. TÍN HIỆU TÁCH BẦY ---
 func _on_separation_area_body_entered(body: Node2D) -> void:
-	# Chỉ nhận diện đồng bọn mang group Enemy, tránh bị đẩy bởi Player hoặc Tường
 	if body != self and body.is_in_group("Enemy"):
 		if not nearby_peers.has(body):
 			nearby_peers.append(body)

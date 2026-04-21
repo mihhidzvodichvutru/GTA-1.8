@@ -5,17 +5,18 @@
 [ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="3_2qwgw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lx5of"]
-radius = 7.0
-height = 24.0
+radius = 5.0
+height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qwgw"]
 radius = 214.11446
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lx5of"]
-radius = 51.156624
+radius = 64.00781
 
 [node name="BoyPho" type="CharacterBody2D" unique_id=83811659]
-collision_layer = 2
+collision_layer = 3
+collision_mask = 12
 script = ExtResource("1_kscsk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2095051779]
@@ -59,7 +60,7 @@ target_position = Vector2(20.5061, 0.7071066)
 [node name="MuiTenIcon" type="Sprite2D" parent="." unique_id=2090531749]
 modulate = Color(1, 0, 0, 1)
 visibility_layer = 8
-position = Vector2(7.1525574e-07, 0)
+position = Vector2(-3.5762787e-07, 0)
 scale = Vector2(0.06666666, 0.06927193)
 texture = ExtResource("3_2qwgw")
 
