@@ -1,0 +1,168 @@
+[gd_scene format=3 uid="uid://dny4xooxok42s"]
+
+[ext_resource type="Script" uid="uid://bga14syj1emym" path="res://game_over_menu.gd" id="1_4j5i6"]
+[ext_resource type="Texture2D" uid="uid://dofccvml01683" path="res://LogoGTA1.8.png" id="2_17l84"]
+[ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_a3fl3"]
+[ext_resource type="Texture2D" uid="uid://cme5nx8u1te28" path="res://Busted.png" id="3_isdfh"]
+[ext_resource type="Texture2D" uid="uid://d3s8lf2d883wm" path="res://Wasted.png" id="4_4j5i6"]
+[ext_resource type="Shader" uid="uid://dsfsvpjnsgllc" path="res://game_over_menu.gdshader" id="4_17l84"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3fl3"]
+shader = ExtResource("4_17l84")
+shader_parameter/do_xam = 0.0
+
+[node name="GameOverMenu" type="CanvasLayer" unique_id=744693632]
+process_mode = 3
+script = ExtResource("1_4j5i6")
+anh_tai_nan = ExtResource("4_4j5i6")
+anh_bi_bat = ExtResource("3_isdfh")
+
+[node name="WastedOverlay" type="CanvasLayer" parent="." unique_id=2053085720]
+
+[node name="ManHinhXam" type="ColorRect" parent="WastedOverlay" unique_id=276126630]
+material = SubResource("ShaderMaterial_a3fl3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChuWasted" type="Label" parent="WastedOverlay" unique_id=1969622915]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.6189329, 1.732707e-06, 3.85046e-07, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_a3fl3")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+
+[node name="GiaoDienChinh" type="Control" parent="." unique_id=1094797255]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="GiaoDienChinh" unique_id=1308240256]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1112.0
+offset_bottom = 608.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameLogo" type="TextureRect" parent="GiaoDienChinh" unique_id=1687559942]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 185.0
+offset_bottom = 186.0
+texture = ExtResource("2_17l84")
+expand_mode = 1
+
+[node name="GameOver" type="Label" parent="GiaoDienChinh" unique_id=1951176646]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 755.0
+offset_top = -1.0
+offset_right = 1112.0
+offset_bottom = 96.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.5868582, 0.40646583, 0.1380148, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_a3fl3")
+theme_override_font_sizes/font_size = 72
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="Polygon2D" parent="GiaoDienChinh" unique_id=560749887]
+position = Vector2(0, -39.668846)
+scale = Vector2(1, 1.0697168)
+texture = ExtResource("4_4j5i6")
+texture_scale = Vector2(0.8, 0.8)
+polygon = PackedVector2Array(182, 81.02037, 125, 609.1975, 1104, 617.61096, 1043, 134.3055)
+uv = PackedVector2Array(25.100006, 48.400005, -0.91589355, 581.91223, 930.9254, 581.91223, 890.10004, 72.705505)
+
+[node name="HighlightPoly" type="Polygon2D" parent="GiaoDienChinh" unique_id=1009696319]
+color = Color(0.54509807, 0.27058825, 0.07450981, 1)
+polygon = PackedVector2Array(516, 303, 515, 356, 667, 360, 654, 312)
+
+[node name="KhuonRestart" type="Polygon2D" parent="GiaoDienChinh" unique_id=1104415688]
+visible = false
+polygon = PackedVector2Array(518, 310, 515, 358, 675, 359, 654, 312)
+
+[node name="KhuonQuit" type="Polygon2D" parent="GiaoDienChinh" unique_id=252680467]
+visible = false
+polygon = PackedVector2Array(529, 366, 524, 416, 657, 412, 638, 365)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GiaoDienChinh" unique_id=1445324596]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 426.0
+offset_top = 286.0
+offset_right = 703.0
+offset_bottom = 479.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BtnRestart" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=765515501]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_a3fl3")
+theme_override_font_sizes/font_size = 36
+text = "CHƠI LẠI"
+flat = true
+
+[node name="BtnQuit" type="Button" parent="GiaoDienChinh/VBoxContainer" unique_id=1885131259]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8784314, 0.84705883, 0.78431374, 1)
+theme_override_colors/font_hover_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5882353, 0.40784314, 0.13725491, 1)
+theme_override_colors/font_outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_a3fl3")
+theme_override_font_sizes/font_size = 36
+text = "THOÁT"
+flat = true
+
+[node name="LblTien" type="Label" parent="." unique_id=1917988366]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -70.0
+offset_right = 25.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_a3fl3")
+theme_override_font_sizes/font_size = 36

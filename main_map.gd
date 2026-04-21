@@ -24,6 +24,8 @@ var diem_giao_hien_tai: Node2D = null
 
 @onready var mui_ten_la_ban: Sprite2D = $MuiTenLaBan
 
+var dang_o_trong_vung: bool = false
+
 var astar_grid: AStarGrid2D
 
 # Nếu bạn chưa làm kịp giao diện hội thoại (DialogueUI), 
@@ -135,6 +137,18 @@ func _ready():
 	gps_timer.timeout.connect(_cap_nhat_vet_gps)
 	add_child(gps_timer)
 
+	for diem in tap_hop_diem_giao:
+		var vung = diem.get_node("VungGiaoHang") 
+		if vung:
+			if not vung.body_entered.is_connected(_on_vung_giao_hang_body_entered):
+				# Bơm thẳng dữ liệu 'diem' (Ngôi nhà) vào tín hiệu
+				vung.body_entered.connect(_on_vung_giao_hang_body_entered.bind(diem))
+				
+			if not vung.body_exited.is_connected(_on_vung_giao_hang_body_exited):
+				vung.body_exited.connect(_on_vung_giao_hang_body_exited.bind(diem))
+				
+	chon_diem_giao_moi()
+
 func _khoi_dong_spawner():
 	await get_tree().physics_frame # Chờ mảng xanh load xong
 	while true:
@@ -225,19 +239,39 @@ func _thu_spawn_boy_pho():
 				# Chỗ này kẹt tường -> Xóa sổ cái xác này ngay lập tức!
 				boy.free()
 
-# Hàm này dùng để random một điểm đến mới
+# 1. Xử lý lúc có đơn mới: Ép NPC hiện frame 0
 func chon_diem_giao_moi():
+	# 1. QUYÉT DỌN: Ẩn TOÀN BỘ Icon bản đồ và NPC của tất cả các nhà
+	for diem in tap_hop_diem_giao:
+		# Ẩn Icon giọt nước trên Google Map (Layer 6)
+		# Giả sử ông đặt tên nó là "IconBanDo" hoặc dùng get_child(0)
+		var icon_ban_do = diem.get_node_or_null("IconBanDo") 
+		if icon_ban_do:
+			icon_ban_do.visible = false
+		
+		# Ẩn luôn NPC trên màn hình chính (Layer 2)
+		var npc = diem.get_node_or_null("NguoiNhan")
+		if npc:
+			npc.visible = false
+
+	# 2. KÍCH HOẠT: Chỉ hiện điểm được chọn ngẫu nhiên
 	if tap_hop_diem_giao.size() > 0:
 		diem_giao_hien_tai = tap_hop_diem_giao.pick_random()
-		print("📦 CÓ ĐƠN HÀNG MỚI! Điểm đến: ", diem_giao_hien_tai.name)
-		_cap_nhat_vet_gps() 
-	# Ẩn tất cả icon trước
-	for diem in tap_hop_diem_giao:
-		diem.get_child(0).visible = false 
-	
-	# Chọn điểm mới và hiện icon của nó lên
-	diem_giao_hien_tai = tap_hop_diem_giao.pick_random()
-	diem_giao_hien_tai.get_child(0).visible = true	
+		
+		print("📦 ĐƠN HÀNG MỚI: ", diem_giao_hien_tai.name)
+		
+		# Hiện Icon giọt nước của NHÀ NÀY trên Google Map
+		var icon_muc_tieu = diem_giao_hien_tai.get_node_or_null("IconBanDo")
+		if icon_muc_tieu:
+			icon_muc_tieu.visible = true
+			
+		# Hiện NPC của NHÀ NÀY trên màn hình chính
+		var npc_muc_tieu = diem_giao_hien_tai.get_node_or_null("NguoiNhan")
+		if npc_muc_tieu:
+			npc_muc_tieu.frame = 0 # Trạng thái chờ
+			npc_muc_tieu.visible = true
+		
+		_cap_nhat_vet_gps()
 
 func _cap_nhat_vet_gps():
 	if not shipper or not diem_giao_hien_tai: 
@@ -260,3 +294,46 @@ func _cap_nhat_vet_gps():
 		# FALLBACK: Nếu mảng xanh bị đứt hoàn toàn không nối được, 
 		# vẽ một đường thẳng tắp từ xe đến thẳng nhà khách hàng (đường chim bay)
 		vet_gps.points = [start_pos, target_pos]
+
+func _input(event):
+	# Kiểm tra nếu nhấn phím F khi đang ở đúng điểm giao
+	if event.is_action_pressed("phim_f") and dang_o_trong_vung:
+		_hoan_thanh_giao_hang()
+# 2. Xử lý lúc bấm F xong: Lật sang frame 1
+func _hoan_thanh_giao_hang():
+	print("✔ Giao hàng thành công!")
+	if hud:
+		hud.run_mission_complete_effect(50000)
+	dang_o_trong_vung = false
+
+	GameManager.cong_tien(50000)
+	# Ẩn ngay cái Icon trên bản đồ điện thoại
+	var icon_vua_giao = diem_giao_hien_tai.get_node_or_null("IconBanDo")
+	if icon_vua_giao:
+		icon_vua_giao.visible = false
+		
+	# NPC đổi ảnh nhận hàng nhưng vẫn hiện thêm 10s
+	var npc_vua_giao = diem_giao_hien_tai.get_node_or_null("NguoiNhan")
+	if npc_vua_giao:
+		npc_vua_giao.frame = 1 
+		get_tree().create_timer(10.0).timeout.connect(func(): npc_vua_giao.visible = false)
+	
+	vet_gps.points = []
+	diem_giao_hien_tai = null 
+	
+	await get_tree().create_timer(2.0).timeout
+	chon_diem_giao_moi()
+
+	
+
+# --- TÍN HIỆU TỪ AREA2D ---
+# THÊM THAM SỐ 'nha_cua_vung_nay' VÀO ĐÂY:
+func _on_vung_giao_hang_body_entered(body, nha_cua_vung_nay):
+	# Nếu đúng là xe Shipper VÀ nhà vừa chạm vào chính là điểm đang cần giao
+	if body.is_in_group("Player") and diem_giao_hien_tai == nha_cua_vung_nay:
+		dang_o_trong_vung = true
+		print("Ấn F để giao hàng!")
+
+func _on_vung_giao_hang_body_exited(body, nha_cua_vung_nay):
+	if body.is_in_group("Player") and diem_giao_hien_tai == nha_cua_vung_nay:
+		dang_o_trong_vung = false
