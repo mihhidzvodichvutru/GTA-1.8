@@ -5,7 +5,6 @@
 [ext_resource type="Shader" uid="uid://dsfsvpjnsgllc" path="res://game_over_menu.gdshader" id="4_pwkbk"]
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="5_vcqnf"]
 [ext_resource type="Texture2D" uid="uid://dofccvml01683" path="res://LogoGTA1.8.png" id="6_1coef"]
-[ext_resource type="Script" uid="uid://bxl4fvvnxjgt3" path="res://game_over_2.gd" id="6_uad2t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3fl3"]
 shader = ExtResource("4_pwkbk")
@@ -96,7 +95,6 @@ texture = ExtResource("3_tdi4n")
 texture_scale = Vector2(0.7, 0.7)
 polygon = PackedVector2Array(182, 81.02037, 125, 609.1975, 1104, 617.61096, 1043, 134.3055)
 uv = PackedVector2Array(22.231411, 102.11311, -3.7844844, 635.62537, 915.18286, 633.21387, 887.2315, 126.41861)
-script = ExtResource("6_uad2t")
 
 [node name="HighlightPoly" type="Polygon2D" parent="GiaoDienChinh" unique_id=1009696319]
 color = Color(0.54509807, 0.27058825, 0.07450981, 1)

@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var acceleration: float = 150 
 @export var friction: float = 800     
 @export var traction: float = 200    
-@export var game_over_scene: PackedScene # <--- Ô NÀY SẼ HIỆN TRÊN INSPECTOR
+@export var game_over_scene: PackedScene
 @export var dead_sfx: AudioStream
 
 
