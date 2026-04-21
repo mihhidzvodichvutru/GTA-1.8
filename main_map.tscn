@@ -4365,7 +4365,7 @@ texture = ExtResource("12_t3ofs")
 [node name="Police" parent="." unique_id=419289909 instance=ExtResource("13_dt6kx")]
 position = Vector2(486, -1363)
 
-[node name="Police2" parent="." unique_id=261945631 groups=["Player"] instance=ExtResource("13_dt6kx")]
+[node name="Police2" parent="." unique_id=261945631 instance=ExtResource("13_dt6kx")]
 position = Vector2(794, -1120)
 
 [editable path="HeThongDen/DenGiaoThong4"]
