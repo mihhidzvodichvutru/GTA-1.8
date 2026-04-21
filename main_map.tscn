@@ -4115,7 +4115,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("2_ob7o4")
 metadata/_edit_lock_ = true
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1633509345 groups=["Player"]]
 navigation_polygon = SubResource("NavigationPolygon_qu338")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="NavigationRegion2D" unique_id=1499468314]

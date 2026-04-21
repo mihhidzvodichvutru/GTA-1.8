@@ -5,30 +5,31 @@
 [ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="3_2qwgw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lx5of"]
-radius = 4.0
-height = 18.0
+radius = 5.0
+height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qwgw"]
 radius = 214.11446
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lx5of"]
-radius = 17.0
+radius = 64.00781
 
 [node name="BoyPho" type="CharacterBody2D" unique_id=83811659]
-collision_layer = 2
+collision_layer = 3
+collision_mask = 12
 script = ExtResource("1_kscsk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2095051779]
 visibility_layer = 2
 position = Vector2(-5.9604645e-05, 2.861023e-06)
-rotation = 3.1415927
+rotation = -1.5707964
 scale = Vector2(0.33333513, 0.37755173)
 texture = ExtResource("2_lx5of")
 region_enabled = true
 region_rect = Rect2(41.471416, 95.3425, 27.71288, 49.875885)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971973891]
-rotation = 3.1415927
+rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_lx5of")
 
 [node name="AggroArea" type="Area2D" parent="." unique_id=651184737]
@@ -39,6 +40,8 @@ collision_mask = 15
 shape = SubResource("CircleShape2D_2qwgw")
 
 [node name="SeparationArea" type="Area2D" parent="." unique_id=761236496]
+collision_layer = 0
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=1739930490]
 shape = SubResource("CircleShape2D_lx5of")
@@ -57,10 +60,11 @@ target_position = Vector2(20.5061, 0.7071066)
 [node name="MuiTenIcon" type="Sprite2D" parent="." unique_id=2090531749]
 modulate = Color(1, 0, 0, 1)
 visibility_layer = 8
-position = Vector2(0, -7.6293945e-06)
-rotation = -1.5707964
-scale = Vector2(0.07, 0.07)
+position = Vector2(-3.5762787e-07, 0)
+scale = Vector2(0.06666666, 0.06927193)
 texture = ExtResource("3_2qwgw")
 
 [connection signal="body_entered" from="AggroArea" to="." method="_on_aggro_area_body_entered"]
 [connection signal="body_exited" from="AggroArea" to="." method="_on_aggro_area_body_exited"]
+[connection signal="body_entered" from="SeparationArea" to="." method="_on_separation_area_body_entered"]
+[connection signal="body_exited" from="SeparationArea" to="." method="_on_separation_area_body_exited"]
