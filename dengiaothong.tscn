@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="3_rlrar"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_deqom"]
-size = Vector2(10, 67.5)
+size = Vector2(10, 79.75)
 
 [node name="DenGiaoThong" type="Node2D" unique_id=39744397]
 position = Vector2(558, 281)
@@ -31,7 +31,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Area2D" type="Area2D" parent="." unique_id=788256721]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=695585983]
-position = Vector2(0, 48)
+position = Vector2(0, 54.125)
 shape = SubResource("RectangleShape2D_deqom")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

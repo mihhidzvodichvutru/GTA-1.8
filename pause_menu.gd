@@ -87,6 +87,13 @@ func _toggle_pause():
 	is_paused = !is_paused
 	get_tree().paused = is_paused
 	visible = is_paused
+
+	var hud = get_tree().current_scene.get_node_or_null("HUD")
+	if hud:
+		hud.visible = !is_paused
+		
+	if is_paused:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	if is_paused:
 		# Reset UI về trang chính mỗi khi ấn ESC
