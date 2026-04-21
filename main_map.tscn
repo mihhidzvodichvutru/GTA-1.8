@@ -8,9 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://dcyodg2t4kdoj" path="res://duong2.png" id="5_286o7"]
 [ext_resource type="PackedScene" uid="uid://hwggdpj2o1kx" path="res://boy_pho.tscn" id="5_v4mvp"]
 [ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="7_fnffn"]
+[ext_resource type="PackedScene" uid="uid://dny4xooxok42s" path="res://game_over_menu.tscn" id="7_i4yi8"]
 [ext_resource type="PackedScene" uid="uid://c2jfrjtvg3jt8" path="res://hud.tscn" id="8_hio4h"]
+[ext_resource type="AudioStream" uid="uid://c67dgg6vmet35" path="res://DeadSFX.mp3" id="10_1k36j"]
 [ext_resource type="PackedScene" uid="uid://dmmjdgexr65yu" path="res://dengiaothong.tscn" id="10_4ly05"]
 [ext_resource type="Texture2D" uid="uid://clkrti1acm2i2" path="res://Marker.png" id="10_t3ofs"]
+[ext_resource type="Texture2D" uid="uid://ncwptqvadwm2" path="res://nhanhang.png" id="11_dt6kx"]
 [ext_resource type="Texture2D" uid="uid://dw1vk8exrtspq" path="res://Arrow.png" id="12_t3ofs"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qu338"]
@@ -4095,6 +4098,9 @@ sources/0 = SubResource("TileSetAtlasSource_t3ofs")
 radius = 4.0
 height = 18.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i4yi8"]
+radius = 24.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_286o7"]
 size = Vector2(10, 253.77759)
 
@@ -4125,6 +4131,8 @@ tile_set = SubResource("TileSet_dt6kx")
 
 [node name="Shipper" parent="." unique_id=841592191 instance=ExtResource("4_ob7o4")]
 position = Vector2(-1176, 238)
+game_over_scene = ExtResource("7_i4yi8")
+dead_sfx = ExtResource("10_1k36j")
 
 [node name="ModelShipper" type="Sprite2D" parent="Shipper" unique_id=1452433406]
 visibility_layer = 2
@@ -4149,6 +4157,10 @@ rotation = -1.5707964
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("7_fnffn")
 
+[node name="SFX_GameOver" type="AudioStreamPlayer" parent="Shipper" unique_id=1844695843]
+process_mode = 3
+stream = ExtResource("10_1k36j")
+
 [node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
 position = Vector2(-1125, -359)
 
@@ -4159,72 +4171,156 @@ position = Vector2(-1125, -359)
 [node name="Nha1" type="Marker2D" parent="CacDiemGiaoHang" unique_id=1270936683]
 position = Vector2(-2752, -274)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha1" unique_id=2053764919]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha1" unique_id=2053764919]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
 
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha1" unique_id=1502233502]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha1/VungGiaoHang" unique_id=1762865484]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha1" unique_id=1155411666]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
+
 [node name="Nha2" type="Marker2D" parent="CacDiemGiaoHang" unique_id=908594836]
 position = Vector2(2028, 747)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha2" unique_id=463797222]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha2" unique_id=463797222]
 visibility_layer = 32
 z_index = 15
 position = Vector2(2, 2.861023e-06)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
 
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha2" unique_id=1302722182]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha2/VungGiaoHang" unique_id=781087097]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha2" unique_id=1149649693]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
+
 [node name="Nha3" type="Marker2D" parent="CacDiemGiaoHang" unique_id=1306368503]
 position = Vector2(2373, -1241)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha3" unique_id=1120589183]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha3" unique_id=1120589183]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
+
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha3" unique_id=1966806905]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha3/VungGiaoHang" unique_id=1313732059]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha3" unique_id=1833502966]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
 
 [node name="Nha4" type="Marker2D" parent="CacDiemGiaoHang" unique_id=338540538]
 position = Vector2(-2804, 715)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha4" unique_id=910130591]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha4" unique_id=910130591]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
+
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha4" unique_id=275066038]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha4/VungGiaoHang" unique_id=475918243]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha4" unique_id=10462883]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
 
 [node name="Nha5" type="Marker2D" parent="CacDiemGiaoHang" unique_id=861074174]
 position = Vector2(-293, 1205)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha5" unique_id=307730290]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha5" unique_id=307730290]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
+
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha5" unique_id=2096963115]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha5/VungGiaoHang" unique_id=1915501250]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha5" unique_id=1111707786]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
 
 [node name="Nha6" type="Marker2D" parent="CacDiemGiaoHang" unique_id=507436721]
 position = Vector2(-549, -788)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha6" unique_id=1112028030]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha6" unique_id=1112028030]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
+
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha6" unique_id=280365361]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha6/VungGiaoHang" unique_id=1345743988]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha6" unique_id=1299004425]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
 
 [node name="Nha7" type="Marker2D" parent="CacDiemGiaoHang" unique_id=509095967]
 position = Vector2(1413, -771)
 
-[node name="Sprite2D" type="Sprite2D" parent="CacDiemGiaoHang/Nha7" unique_id=2133941110]
+[node name="IconBanDo" type="Sprite2D" parent="CacDiemGiaoHang/Nha7" unique_id=2133941110]
 visibility_layer = 32
 z_index = 15
 position = Vector2(1, -37.999996)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("10_t3ofs")
+
+[node name="VungGiaoHang" type="Area2D" parent="CacDiemGiaoHang/Nha7" unique_id=1502578527]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CacDiemGiaoHang/Nha7/VungGiaoHang" unique_id=596789910]
+shape = SubResource("CircleShape2D_i4yi8")
+
+[node name="NguoiNhan" type="Sprite2D" parent="CacDiemGiaoHang/Nha7" unique_id=1910602153]
+visibility_layer = 2
+position = Vector2(0, -7)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("11_dt6kx")
+hframes = 2
 
 [node name="VetGPS" type="Line2D" parent="." unique_id=2145856316]
 top_level = true

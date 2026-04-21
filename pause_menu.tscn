@@ -3,18 +3,12 @@
 [ext_resource type="Script" uid="uid://uycbaafri40c" path="res://pause_menu.gd" id="1_2nc7s"]
 [ext_resource type="Texture2D" uid="uid://dofccvml01683" path="res://LogoGTA1.8.png" id="1_05uyy"]
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="2_05uyy"]
-[ext_resource type="AudioStream" uid="uid://pbxg5ddbymy2" path="res://TOICAOVATOICAOHON.ogg" id="2_d3xb4"]
 [ext_resource type="Texture2D" uid="uid://dytgljmukttwj" path="res://pause_menu.png" id="4_2nc7s"]
 [ext_resource type="Texture2D" uid="uid://dpng78fl1notr" path="res://settings_menu.png" id="5_d3xb4"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=744693632]
 process_mode = 3
 script = ExtResource("1_2nc7s")
-
-[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1623066271]
-stream = ExtResource("2_d3xb4")
-volume_db = -10.0
-autoplay = true
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1308240256]
 anchors_preset = 15

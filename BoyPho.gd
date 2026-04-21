@@ -109,11 +109,24 @@ func _physics_process(delta: float) -> void:
 		var va_cham = get_slide_collision(i)
 		var ke_bi_tong = va_cham.get_collider()
 		
+		# --- BẮT ĐẦU DEBUG ---
+		print("💥 Vừa tông trúng: ", ke_bi_tong.name)
+		
 		if ke_bi_tong and ke_bi_tong.is_in_group("Player"):
+			print("✅ Đúng là Player rồi!")
+			
 			if thoi_gian_da_qua >= thoi_gian_hoi_chieu:
+				print("⏳ Đã hồi chiêu xong! Chuẩn bị cắn máu...")
+				
 				if ke_bi_tong.has_method("bi_tru_mau"):
 					ke_bi_tong.bi_tru_mau(sat_thuong)
+					print("🩸 Đã gọi hàm bi_tru_mau thành công!")
+				else:
+					print("❌ LỖI: Không tìm thấy hàm bi_tru_mau trong xe Shipper")
+					
 				thoi_gian_da_qua = 0.0
+			else:
+				print("⌛ Đang hồi chiêu, chưa tông được tiếp...")
 
 # --- 6. TÍN HIỆU TẦM NHÌN (Đã xóa cái Hive Mind) ---
 func _on_aggro_area_body_entered(body: Node2D) -> void:
