@@ -5,10 +5,9 @@ extends CharacterBody2D
 @export var friction: float = 800     
 @export var traction: float = 200    
 @export var game_over_scene: PackedScene
+@export var game_over_scene2: PackedScene
 @export var dead_sfx: AudioStream
 
-
-@onready var hinh_bi_bat = $HinhBiBat
 @onready var sfx_game_over = $SFX_GameOver
 var da_chet: bool = false
 var mau: int = 100 # Đưa biến máu lên đây cho dễ quản lý
@@ -78,6 +77,38 @@ func chet(ly_do: String):
 		menu.setup_cinematic(ly_do) 
 	
 		await get_tree().create_timer(0.9).timeout 
+		
+		Engine.time_scale = 1.0
+		menu.show_final_menu() 
+	
+	get_tree().paused = true
+
+func bi_bat(ly_do: String = "busted"): 
+	if da_chet: return
+	da_chet = true
+	
+	# Ẩn HUD
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud: hud.visible = false
+
+	# --- DEBUG ÂM THANH ---
+	if dead_sfx:
+		print("🔊 Đang phát âm thanh chết...")
+		sfx_game_over.stream = dead_sfx
+		sfx_game_over.play()
+	else:
+		print("⚠️ CẢNH BÁO: Quên chưa gán file âm thanh vào ô Dead Sfx ở Inspector!")
+
+	Engine.time_scale = 0.2
+	
+	if game_over_scene2:
+		var menu = game_over_scene2.instantiate()
+		get_tree().root.add_child(menu)
+		
+		# Bây giờ lệnh này sẽ chạy ngon vì ly_do đã có giá trị mặc định
+		menu.setup_cinematic(ly_do) 
+	
+		await get_tree().create_timer(0.9).timeout
 		
 		Engine.time_scale = 1.0
 		menu.show_final_menu() 

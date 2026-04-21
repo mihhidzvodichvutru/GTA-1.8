@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="7_fnffn"]
 [ext_resource type="PackedScene" uid="uid://dny4xooxok42s" path="res://game_over_menu.tscn" id="7_i4yi8"]
 [ext_resource type="PackedScene" uid="uid://c2jfrjtvg3jt8" path="res://hud.tscn" id="8_hio4h"]
+[ext_resource type="PackedScene" uid="uid://dr8igpxymm441" path="res://game_over_2.tscn" id="8_nr864"]
 [ext_resource type="AudioStream" uid="uid://c67dgg6vmet35" path="res://DeadSFX.mp3" id="10_1k36j"]
 [ext_resource type="PackedScene" uid="uid://dmmjdgexr65yu" path="res://dengiaothong.tscn" id="10_4ly05"]
 [ext_resource type="Texture2D" uid="uid://clkrti1acm2i2" path="res://Marker.png" id="10_t3ofs"]
@@ -4134,6 +4135,7 @@ tile_set = SubResource("TileSet_dt6kx")
 [node name="Shipper" parent="." unique_id=841592191 instance=ExtResource("4_ob7o4")]
 position = Vector2(-1176, 238)
 game_over_scene = ExtResource("7_i4yi8")
+game_over_scene2 = ExtResource("8_nr864")
 dead_sfx = ExtResource("10_1k36j")
 
 [node name="ModelShipper" type="Sprite2D" parent="Shipper" unique_id=1452433406]

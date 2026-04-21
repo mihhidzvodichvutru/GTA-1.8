@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dr8igpxymm441"]
 
-[ext_resource type="Script" uid="uid://bga14syj1emym" path="res://game_over_menu.gd" id="1_uad2t"]
 [ext_resource type="Texture2D" uid="uid://cme5nx8u1te28" path="res://Busted.png" id="3_tdi4n"]
 [ext_resource type="Shader" uid="uid://dsfsvpjnsgllc" path="res://game_over_menu.gdshader" id="4_pwkbk"]
 [ext_resource type="FontFile" uid="uid://c087c1aecdtvf" path="res://Pricedown Bl.otf" id="5_vcqnf"]
 [ext_resource type="Texture2D" uid="uid://dofccvml01683" path="res://LogoGTA1.8.png" id="6_1coef"]
+[ext_resource type="Script" uid="uid://bxl4fvvnxjgt3" path="res://game_over_2.gd" id="6_uad2t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a3fl3"]
 shader = ExtResource("4_pwkbk")
@@ -12,7 +12,7 @@ shader_parameter/do_xam = 0.0
 
 [node name="GameOver2" type="CanvasLayer" unique_id=744693632]
 process_mode = 3
-script = ExtResource("1_uad2t")
+script = ExtResource("6_uad2t")
 
 [node name="WastedOverlay" type="CanvasLayer" parent="." unique_id=2053085720]
 
