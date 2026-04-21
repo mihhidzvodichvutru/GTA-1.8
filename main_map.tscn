@@ -4093,13 +4093,8 @@ sources/0 = SubResource("TileSetAtlasSource_t3ofs")
 radius = 4.0
 height = 18.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v4mvp"]
-radius = 4.0
-height = 18.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qu338"]
-radius = 4.0
-height = 18.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_286o7"]
+size = Vector2(10, 253.77759)
 
 [node name="MainMap" type="Node2D" unique_id=1466705353]
 position = Vector2(-1261, 503)
@@ -4152,32 +4147,6 @@ rotation = -1.5707964
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("7_fnffn")
 
-[node name="CharacterBody2D2" type="CharacterBody2D" parent="." unique_id=1855213066]
-position = Vector2(-1156, 229)
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D2" unique_id=2036373318]
-position = Vector2(-5.9604645e-05, 2.861023e-06)
-scale = Vector2(0.33333513, 0.37755173)
-texture = ExtResource("5_1ns3a")
-region_enabled = true
-region_rect = Rect2(41.471416, 95.3425, 27.71288, 49.875885)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D2" unique_id=1286011293]
-shape = SubResource("CapsuleShape2D_v4mvp")
-
-[node name="CharacterBody2D3" type="CharacterBody2D" parent="." unique_id=1402046904]
-position = Vector2(-1209, 232)
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D3" unique_id=320843270]
-position = Vector2(2.2888184e-05, -1.335144e-05)
-scale = Vector2(0.3076938, 0.3749992)
-texture = ExtResource("5_1ns3a")
-region_enabled = true
-region_rect = Rect2(123.08543, 95.93913, 26.135506, 48.388794)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D3" unique_id=1174658587]
-shape = SubResource("CapsuleShape2D_qu338")
-
 [node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
 position = Vector2(-1125, -359)
 
@@ -4215,6 +4184,7 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 antialiased = true
+
 [node name="HeThongDen" type="Node2D" parent="." unique_id=1740681990]
 
 [node name="DenGiaoThong" parent="HeThongDen" unique_id=39744397 instance=ExtResource("10_4ly05")]
@@ -4226,12 +4196,16 @@ position = Vector2(-1177, -1184)
 [node name="DenGiaoThong3" parent="HeThongDen" unique_id=444242689 instance=ExtResource("10_4ly05")]
 position = Vector2(-1174, -1071)
 
+[node name="DenGiaoThong5" parent="HeThongDen" unique_id=1745697202 instance=ExtResource("10_4ly05")]
+position = Vector2(-889, -1017)
+
 [node name="DenGiaoThong4" parent="HeThongDen" unique_id=382669565 instance=ExtResource("10_4ly05")]
 position = Vector2(-917, -906)
 rotation = 1.5599393
 do_tre_ban_dau = 13.0
 
-[node name="DenGiaoThong5" parent="HeThongDen" unique_id=321076091 instance=ExtResource("10_4ly05")]
-position = Vector2(-1197, -903)
-rotation = 4.693234
-do_tre_ban_dau = 13.0
+[node name="CollisionShape2D" parent="HeThongDen/DenGiaoThong4/Area2D" parent_id_path=PackedInt32Array(382669565, 788256721) index="0" unique_id=695585983]
+position = Vector2(0, 141.13867)
+shape = SubResource("RectangleShape2D_286o7")
+
+[editable path="HeThongDen/DenGiaoThong4"]
