@@ -7,11 +7,18 @@
 radius = 4.0
 height = 14.0
 
-[node name="Police" type="CharacterBody2D" unique_id=419289909]
+[sub_resource type="CircleShape2D" id="CircleShape2D_cw7eu"]
+radius = 21.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8t4tw"]
+radius = 33.37664
+
+[node name="Police" type="CharacterBody2D" unique_id=419289909 groups=["CanhSat"]]
 script = ExtResource("1_cw7eu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=754176258]
 position = Vector2(-1.1920929e-07, 0)
+rotation = -1.5707964
 scale = Vector2(0.33820987, 0.30497232)
 texture = ExtResource("2_cw7eu")
 region_enabled = true
@@ -29,6 +36,14 @@ radius = 21.0
 [node name="Timer" type="Timer" parent="." unique_id=2089995401]
 
 [node name="CatchArea" type="Area2D" parent="." unique_id=208544211]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea" unique_id=1675933806]
+shape = SubResource("CircleShape2D_cw7eu")
+
+[node name="SeparationArea" type="Area2D" parent="." unique_id=2015051136]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=257167721]
+shape = SubResource("CircleShape2D_8t4tw")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]
