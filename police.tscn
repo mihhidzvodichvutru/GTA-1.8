@@ -13,6 +13,7 @@ collision_layer = 2
 script = ExtResource("1_cw7eu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=754176258]
+visibility_layer = 2
 position = Vector2(-1.1920929e-07, 0)
 scale = Vector2(0.33820987, 0.30497232)
 texture = ExtResource("2_cw7eu")
