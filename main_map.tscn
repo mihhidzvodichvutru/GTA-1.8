@@ -16,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://clkrti1acm2i2" path="res://Marker.png" id="10_t3ofs"]
 [ext_resource type="Texture2D" uid="uid://ncwptqvadwm2" path="res://nhanhang.png" id="11_dt6kx"]
 [ext_resource type="Texture2D" uid="uid://dw1vk8exrtspq" path="res://Arrow.png" id="12_t3ofs"]
-[ext_resource type="PackedScene" uid="uid://rr5avu0cxn3w" path="res://police.tscn" id="13_dt6kx"]
 [ext_resource type="PackedScene" uid="uid://bj78piebjyfsw" path="res://xoa_sao.tscn" id="17_e37sb"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qu338"]
@@ -4165,10 +4164,6 @@ texture = ExtResource("7_fnffn")
 process_mode = 3
 stream = ExtResource("10_1k36j")
 
-[node name="BoyPho" parent="." unique_id=83811659 instance=ExtResource("5_v4mvp")]
-visible = false
-position = Vector2(-1125, -359)
-
 [node name="HUD" parent="." unique_id=2128169983 instance=ExtResource("8_hio4h")]
 
 [node name="CacDiemGiaoHang" type="Node2D" parent="." unique_id=1651845183]
@@ -4365,10 +4360,6 @@ visibility_layer = 16
 z_index = 15
 scale = Vector2(0.01, 0.01)
 texture = ExtResource("12_t3ofs")
-
-[node name="Police" parent="." unique_id=419289909 instance=ExtResource("13_dt6kx")]
-visible = false
-position = Vector2(486, -1363)
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=263645021 groups=["PoliceSpawn"]]
 position = Vector2(-1201, -994)
