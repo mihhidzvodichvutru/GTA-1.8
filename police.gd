@@ -98,8 +98,8 @@ func _on_catch_area_body_entered(body: Node2D) -> void:
 			print("🚨 CẢNH SÁT: Đã túm cổ Shipper!")
 			
 			# Gọi hàm nhận sát thương của Shipper (Ép chết luôn)
-			if body.has_method("bi_tru_mau"):
-				body.bi_tru_mau(1000) 
+			if body.has_method("bi_bat"):
+				body.bi_bat()
 			
 			# Hoặc nếu ông viết sẵn hàm bi_bat() bên Shipper thì gọi nó
 			# if body.has_method("bi_bat"): body.bi_bat()
