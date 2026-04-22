@@ -1,29 +1,52 @@
 extends Node
 
+signal wanted_level_changed(level, dang_lan_tron)
+
 var wanted_level: int = 0
 var max_stars: int = 5
-var current_player: Node2D = null
+var police_scene: PackedScene
 
-# Hàm này sẽ được gọi từ Cột đèn, Người đi đường bị tông, v.v.
-func tang_sao_truy_na(so_sao: int, player_node: Node2D):
-	current_player = player_node
-	wanted_level += so_sao
+func _ready():
+	police_scene = preload("res://police.tscn") 
+	# Thả tất cả cảnh sát ra chốt lúc vừa vào game
+	call_deferred("tha_canh_sat_ra_chot")
+
+func tha_canh_sat_ra_chot():
+	var root_node = get_tree().current_scene
+	var spawn_points = get_tree().get_nodes_in_group("PoliceSpawn")
 	
-	if wanted_level > max_stars:
-		wanted_level = max_stars
+	for point in spawn_points:
+		var cop = police_scene.instantiate()
+		cop.add_to_group("Police") 
+		cop.global_position = point.global_position
+		root_node.add_child(cop)
+	print("🚓 Đã rải xong toàn bộ cảnh sát lên bản đồ!")
+
+func tang_sao():
+	if wanted_level < max_stars:
+		wanted_level += 1
+		wanted_level_changed.emit(wanted_level, false)
 		
-	print("=== MỨC ĐỘ TRUY NÃ HIỆN TẠI: ", wanted_level, " SAO ===")
-	_kich_hoat_canh_sat()
+	dieu_phoi_truy_duoi()
 
-func xoa_truy_na():
+func xoa_het_sao():
 	wanted_level = 0
-	current_player = null
-	print("=== ĐÃ XÓA TRUY NÃ, AN TOÀN! ===")
-	# Báo cho toàn bộ cảnh sát quay về trạng thái tuần tra
-	get_tree().call_group("CanhSat", "huy_truy_na")
+	wanted_level_changed.emit(0, false)
+	dieu_phoi_truy_duoi() # Gọi hàm này để báo cảnh sát quay về
 
-func _kich_hoat_canh_sat():
-	# Báo động toàn bộ cảnh sát đang có trên map
-	get_tree().call_group("CanhSat", "nhan_lenh_truy_na", current_player, wanted_level)
+func dieu_phoi_truy_duoi():
+	var cops = get_tree().get_nodes_in_group("Police")
+	var player = get_tree().get_first_node_in_group("Player")
+	if not player or cops.is_empty(): return
 	
-	# Ở Bước 2, ta sẽ code thêm logic Đẻ cảnh sát mới ở đây dựa theo số sao
+	# Sắp xếp danh sách cảnh sát từ GẦN nhất đến XA nhất
+	cops.sort_custom(func(a, b):
+		return a.global_position.distance_squared_to(player.global_position) < b.global_position.distance_squared_to(player.global_position)
+	)
+	
+	# Chỉ định: N xe gần nhất sẽ đuổi, số còn lại quay về đi tuần
+	for i in range(cops.size()):
+		if i < wanted_level:
+			cops[i].trang_thai = "CHASE"
+		else:
+			cops[i].trang_thai = "PATROL"

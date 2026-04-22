@@ -1,10 +1,18 @@
 extends CharacterBody2D
 
 @export var max_speed: float = 100    
-@export var acceleration: float = 150 # Lên ga từ từ (đi thẳng)
-@export var friction: float = 800     # Quán tính phanh khi nhả phím
-# --- BIẾN MỚI ---
-@export var traction: float = 200    # Độ bám đường: Thông số càng cao, cua càng gắt, hết trượt!
+@export var acceleration: float = 150 
+@export var friction: float = 800     
+@export var traction: float = 200    
+@export var game_over_scene: PackedScene
+@export var game_over_scene2: PackedScene
+@export var dead_sfx: AudioStream
+
+@onready var sfx_game_over = $SFX_GameOver
+var da_chet: bool = false
+var mau: int = 100 # Đưa biến máu lên đây cho dễ quản lý
+
+signal mau_thay_doi(mau_hien_tai)
 
 func _physics_process(delta):
 	var move_dir = Vector2.ZERO
@@ -52,12 +60,36 @@ var tien_mat: int = 500 # Cho Shipper ít tiền khởi nghiệp
 func bi_bat_loi_vuot_den():
 	print("Shipper: Chết dở, vượt đèn đỏ bị camera quay lại rồi!")
 	
-	# Ví dụ: Mỗi lần vượt đèn đỏ trừ 50 cành
-	if tien_mat >= 50:
-		tien_mat -= 50
-		print(">> Cảnh báo: Bạn đã bị trừ 50K tiền phạt. Số dư: ", tien_mat)
+	get_tree().paused = true
+
+func bi_bat(ly_do: String = "busted"): 
+	if da_chet: return
+	da_chet = true
+	
+	# Ẩn HUD
+	var hud = get_tree().root.find_child("HUD", true, false)
+	if hud: hud.visible = false
+
+	# --- DEBUG ÂM THANH ---
+	if dead_sfx:
+		print("🔊 Đang phát âm thanh chết...")
+		sfx_game_over.stream = dead_sfx
+		sfx_game_over.play()
 	else:
-		tien_mat = 0
-		print(">> Cảnh báo: Đã nghèo còn dính phạt! Số dư: 0")
+		print("⚠️ CẢNH BÁO: Quên chưa gán file âm thanh vào ô Dead Sfx ở Inspector!")
+
+	Engine.time_scale = 0.2
+	
+	if game_over_scene2:
+		var menu = game_over_scene2.instantiate()
+		get_tree().root.add_child(menu)
 		
-	# Sau này ông có thể thêm logic Tăng sao truy nã ở ngay trong hàm này luôn
+		# Bây giờ lệnh này sẽ chạy ngon vì ly_do đã có giá trị mặc định
+		menu.setup_cinematic(ly_do) 
+	
+		await get_tree().create_timer(0.9).timeout
+		
+		Engine.time_scale = 1.0
+		menu.show_final_menu() 
+	
+	get_tree().paused = true

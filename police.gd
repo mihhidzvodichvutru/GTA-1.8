@@ -1,8 +1,14 @@
 extends CharacterBody2D
-
-@export var speed: float = 160.0
-@export var acceleration: float = 400.0 # Giảm nhẹ gia tốc để xe chạy đầm hơn
-@export var separation_weight: float = 1.5 # Giảm trọng số tách bầy để bớt lắc
+var trang_thai: String = "PATROL"
+var vi_tri_chot: Vector2
+var diem_tuan_tra: Vector2
+var thoi_gian_nghi: float = 0.0
+@export var speed: float = 150.0
+@export var acceleration: float = 600.0 
+var path_update_timer: float = 0.0
+var thoi_gian_khong_thay_player: float = 0.0
+@export var MAX_THOI_GIAN_CHO: float = 10.0 # Sau 10s không thấy sẽ tự biến mất
+@export var tam_nhin: float = 1500.0
 
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 @onready var separation_area: Area2D = $SeparationArea
@@ -11,11 +17,13 @@ var target_node: Node2D = null
 var nearby_peers: Array = [] 
 var dang_truy_na: bool = false 
 
+var dang_nhin_thay_player: bool = true
+
 func _ready() -> void:
-	add_to_group("CanhSat")
-	if separation_area:
-		separation_area.body_entered.connect(_on_separation_entered)
-		separation_area.body_exited.connect(_on_separation_exited)
+	target_node = get_tree().get_first_node_in_group("Player")
+	vi_tri_chot = global_position 
+	diem_tuan_tra = vi_tri_chot # Vừa sinh ra là lấy luôn chốt làm điểm tuần tra
+	call_deferred("actor_setup")
 
 func nhan_lenh_truy_na(thang_shipper: Node2D, so_sao: int) -> void:
 	target_node = thang_shipper
@@ -28,7 +36,49 @@ func huy_truy_na() -> void:
 	velocity = Vector2.ZERO 
 
 func _physics_process(delta: float) -> void:
-	if not dang_truy_na or not is_instance_valid(target_node):
+	if not target_node:
+		return
+		
+	# 1. KIỂM TRA TRẠNG THÁI ĐỂ XÁC ĐỊNH MỤC TIÊU GPS
+	if trang_thai == "CHASE":
+		nav_agent.target_position = target_node.global_position
+	else:
+		# ĐANG ĐI TUẦN (PATROL)
+		if thoi_gian_nghi > 0.0:
+			# Đứng nghỉ tại chỗ
+			thoi_gian_nghi -= delta
+			velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta)
+			move_and_slide()
+			return
+		
+		# --- LOGIC BẮT GIỮ (BUSTED) ---
+	# Chỉ bắt khi đang có sao và xe cảnh sát đang ở chế độ truy đuổi
+	if trang_thai == "CHASE" and WantedManager.wanted_level > 0:
+		for i in get_slide_collision_count():
+			var collision = get_slide_collision(i)
+			var collider = collision.get_collider()
+			
+			if collider and collider.is_in_group("Player"):
+				if collider.has_method("bi_bat"):
+					collider.bi_bat()
+					# Chuyển cảnh sát sang trạng thái nghỉ để không spam code bắt liên tục
+					trang_thai = "PATROL"
+		
+		# Nếu đã đến nơi (hoặc cách dưới 30 pixel)
+		if global_position.distance_to(diem_tuan_tra) < 30.0 or nav_agent.is_navigation_finished():
+			thoi_gian_nghi = randf_range(1.5, 3.5) # Dừng lại quan sát 1.5 đến 3.5 giây
+			
+			# Quay compa tìm điểm đi tuần mới cách chốt từ 150-300 pixel
+			var goc_ngau_nhien = randf() * TAU
+			var khoang_cach = randf_range(150.0, 300.0)
+			var diem_ngau_nhien = vi_tri_chot + Vector2(cos(goc_ngau_nhien), sin(goc_ngau_nhien)) * khoang_cach
+			
+			# Dùng thuật toán ép cái tọa độ ngẫu nhiên đó xuống mặt đường an toàn
+			var nav_map = get_world_2d().navigation_map
+			diem_tuan_tra = NavigationServer2D.map_get_closest_point(nav_map, diem_ngau_nhien)
+
+	# 2. LOGIC LÁI XE VÀ LÁCH NHAU (Chạy tiếp nếu chưa đến đích)
+	if nav_agent.is_navigation_finished():
 		velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta)
 		move_and_slide()
 		return
@@ -58,11 +108,22 @@ func _physics_process(delta: float) -> void:
 	# Áp dụng di chuyển mượt
 	velocity = velocity.move_toward(desired_velocity, acceleration * delta)
 	
-	# --- FIX 2: LÀM MƯỢT GÓC XOAY ---
-	if velocity.length() > 20.0: # Chỉ xoay khi đang chạy đủ nhanh để tránh rung lắc tại chỗ
-		var target_rotation = velocity.angle()
-		rotation = lerp_angle(rotation, target_rotation, 10.0 * delta)
-		
+	if nav_agent.avoidance_enabled:
+		nav_agent.set_velocity(new_velocity)
+	else:
+		velocity = new_velocity
+		_apply_movement()
+
+# Hàm này nhận lại vận tốc an toàn (đã lách nhau) từ NavigationAgent2D
+func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
+	velocity = safe_velocity
+	_apply_movement()
+
+# Tách phần di chuyển và xoay mặt ra một hàm riêng cho gọn
+func _apply_movement():
+	if velocity.length() > 0:
+		# Đã đổi thành - PI / 2 dành cho trường hợp đầu xe chĩa XUỐNG DƯỚI
+		rotation = velocity.angle() - PI / 2
 	move_and_slide()
 	_kiem_tra_bat_shipper()
 

@@ -2,18 +2,14 @@
 
 [ext_resource type="Script" uid="uid://dpkg3jiylw4k0" path="res://police.gd" id="1_cw7eu"]
 [ext_resource type="Texture2D" uid="uid://xgc4fhtstjgy" path="res://nv.png" id="2_cw7eu"]
+[ext_resource type="Texture2D" uid="uid://c0mfhtsao6v2k" path="res://MuiTenIcon.png" id="3_8t4tw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cw7eu"]
 radius = 4.0
 height = 14.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cw7eu"]
-radius = 21.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_8t4tw"]
-radius = 33.37664
-
-[node name="Police" type="CharacterBody2D" unique_id=419289909 groups=["CanhSat"]]
+[node name="Police" type="CharacterBody2D" unique_id=419289909]
+collision_layer = 2
 script = ExtResource("1_cw7eu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=754176258]
@@ -37,13 +33,13 @@ radius = 21.0
 
 [node name="CatchArea" type="Area2D" parent="." unique_id=208544211]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea" unique_id=1675933806]
-shape = SubResource("CircleShape2D_cw7eu")
-
-[node name="SeparationArea" type="Area2D" parent="." unique_id=2015051136]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SeparationArea" unique_id=257167721]
-shape = SubResource("CircleShape2D_8t4tw")
+[node name="MuiTenIcon" type="Sprite2D" parent="." unique_id=152578044]
+modulate = Color(0.9061539, 0.6340874, 0.2438117, 1)
+visibility_layer = 8
+position = Vector2(0, -7.6293945e-06)
+rotation = -4.712389
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("3_8t4tw")
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="body_entered" from="CatchArea" to="." method="_on_catch_area_body_entered"]

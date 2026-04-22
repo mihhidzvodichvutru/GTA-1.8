@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bj78piebjyfsw"]
+
+[ext_resource type="Script" uid="uid://bgubprbucmun6" path="res://xoa_sao.gd" id="1_yjbpy"]
+[ext_resource type="Texture2D" uid="uid://bi03wxgbs1s2" path="res://DeleteStars.png" id="2_5ksap"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yjbpy"]
+radius = 22.022715
+
+[node name="XoaSao" type="Area2D" unique_id=105823368]
+script = ExtResource("1_yjbpy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=991934162]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_5ksap")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=851309372]
+shape = SubResource("CircleShape2D_yjbpy")
+
+[node name="Timer" type="Timer" parent="." unique_id=501824120]
+wait_time = 30.0
+one_shot = true

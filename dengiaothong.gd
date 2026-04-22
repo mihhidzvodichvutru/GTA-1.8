@@ -54,9 +54,13 @@ func _on_timer_timeout():
 func _on_khu_vuc_nga_tu_body_entered(body):
 	# 1. Chỉ bắt lỗi khi Đang Đèn Đỏ VÀ thằng đâm vào thuộc group "Player"
 	if current_state == State.DO and body.is_in_group("Player"):
-		print("Camera: Phát hiện vượt đèn đỏ! Chuẩn bị gửi giấy phạt...")
+		print("🛑 Shipper vượt đèn đỏ!")
 		
-		# 2. Báo cho Shipper biết để nó trừ tiền
+		# Gọi thẳng Tổng đài để tăng 1 sao và reset thời gian truy nã
+		if WantedManager.has_method("tang_sao"):
+			WantedManager.tang_sao()
+			
+		# Vẫn giữ lại hàm bắt lỗi nếu ông muốn Shipper bị trừ tiền riêng
 		if body.has_method("bi_bat_loi_vuot_den"):
 			body.bi_bat_loi_vuot_den() 
 			
