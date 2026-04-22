@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 PauseMenu="*uid://bjfgo7punb371"
 WantedManager="*uid://e5utqusvijh3"
+GameManager="*uid://cajom18y5h406"
 
 [display]
 
