@@ -50,3 +50,15 @@ func dieu_phoi_truy_duoi():
 			cops[i].trang_thai = "CHASE"
 		else:
 			cops[i].trang_thai = "PATROL"
+func reset_he_thong_canh_sat():
+	wanted_level = 0 # Trả số sao về 0
+	
+	# Xóa sạch tàn dư cảnh sát từ mạng trước (nếu có)
+	for cop in get_tree().get_nodes_in_group("Police"):
+		cop.queue_free()
+		
+	# RẤT QUAN TRỌNG: Chờ 0.1 giây để Godot kịp load xong các Marker chốt trên bản đồ mới
+	await get_tree().create_timer(0.1).timeout 
+	
+	# Tiến hành rải quân
+	tha_canh_sat_ra_chot()

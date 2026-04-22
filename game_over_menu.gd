@@ -70,18 +70,13 @@ func show_final_menu():
 # XỬ LÝ CHỨC NĂNG NÚT
 # ==========================================
 func _on_btn_choi_lai_pressed():
-	# 1. Quan trọng: Mở đóng băng game trước
 	get_tree().paused = false
-	
-	# 2. Reset tiền
 	GameManager.money = 0 
+	queue_free() # Xóa UI Game Over đi
+	get_tree().reload_current_scene() # Load lại bản đồ
 	
-	# 3. Xóa chính cái Menu này đi để nó không đè lên Map mới
-	queue_free()
-	
-	# 4. Load lại Scene. 
-	# Dùng reload_current_scene() sẽ an toàn và nhanh hơn nếu ông đang ở MainMap
-	get_tree().reload_current_scene()
+	# --- THÊM DÒNG NÀY VÀO DƯỚI CÙNG ---
+	WantedManager.reset_he_thong_canh_sat()
 
 func _on_btn_thoat_pressed():
 	get_tree().quit()
