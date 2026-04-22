@@ -9,7 +9,7 @@ radius = 4.0
 height = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8t4tw"]
-radius = 31.06445
+radius = 14.0
 
 [node name="Police" type="CharacterBody2D" unique_id=419289909]
 collision_layer = 2
