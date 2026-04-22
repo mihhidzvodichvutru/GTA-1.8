@@ -54,9 +54,6 @@ func _physics_process(delta: float) -> void:
 					collider.bi_bat()
 					# Chuyển cảnh sát sang trạng thái nghỉ để không spam code bắt liên tục
 					trang_thai = "PATROL"
-			
-		# Bật GPS đi tới điểm tuần tra
-		nav_agent.target_position = diem_tuan_tra
 		
 		# Nếu đã đến nơi (hoặc cách dưới 30 pixel)
 		if global_position.distance_to(diem_tuan_tra) < 30.0 or nav_agent.is_navigation_finished():
