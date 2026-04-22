@@ -111,6 +111,9 @@ func _restart_game():
 	
 	# 2. Ép Godot load thẳng file map chính, khỏi cần nhớ current_scene là ai
 	get_tree().change_scene_to_file("res://main_map.tscn")
+	
+	# --- THÊM DÒNG NÀY VÀO DƯỚI CÙNG ---
+	WantedManager.reset_he_thong_canh_sat()
 
 # ==========================================
 # LOGIC SAVE / LOAD (Giống Main Menu)

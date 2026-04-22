@@ -85,7 +85,7 @@ func _ready():
 		btn.mouse_exited.connect(func(): _hide_highlight(highlight_cai_dat, "settings"))
 		
 	# Kết nối chức năng click
-	$GiaoDienChinh/VBoxContainer/BtnStart.pressed.connect(func(): get_tree().change_scene_to_file("res://main_map.tscn"))
+	$GiaoDienChinh/VBoxContainer/BtnStart.pressed.connect(_on_btn_start_pressed)
 	$GiaoDienChinh/VBoxContainer/BtnQuit.pressed.connect(func(): get_tree().quit())
 	$GiaoDienChinh/VBoxContainer/BtnOptions.pressed.connect(_on_options_pressed)
 	
@@ -243,4 +243,9 @@ func show_settings_only():
 	highlight_poly.polygon = khung_nen_cai_dat.polygon
 	
 	load_settings()
-
+func _on_btn_start_pressed():
+	# 1. Chuyển sang bản đồ chính
+	get_tree().change_scene_to_file("res://main_map.tscn")
+	
+	# 2. Đánh thức Tổng đài cảnh sát để rải quân
+	WantedManager.reset_he_thong_canh_sat()
