@@ -1,4 +1,5 @@
 extends CharacterBody2D
+
 var trang_thai: String = "PATROL"
 var vi_tri_chot: Vector2
 var diem_tuan_tra: Vector2
@@ -42,19 +43,9 @@ func _physics_process(delta: float) -> void:
 			move_and_slide()
 			return
 		
-		# --- LOGIC BẮT GIỮ (BUSTED) ---
-	# Chỉ bắt khi đang có sao và xe cảnh sát đang ở chế độ truy đuổi
-	if trang_thai == "CHASE" and WantedManager.wanted_level > 0:
-		for i in get_slide_collision_count():
-			var collision = get_slide_collision(i)
-			var collider = collision.get_collider()
+		# Gán mục tiêu là điểm tuần tra
+		nav_agent.target_position = diem_tuan_tra
 			
-			if collider and collider.is_in_group("Player"):
-				if collider.has_method("bi_bat"):
-					collider.bi_bat()
-					# Chuyển cảnh sát sang trạng thái nghỉ để không spam code bắt liên tục
-					trang_thai = "PATROL"
-		
 		# Nếu đã đến nơi (hoặc cách dưới 30 pixel)
 		if global_position.distance_to(diem_tuan_tra) < 30.0 or nav_agent.is_navigation_finished():
 			thoi_gian_nghi = randf_range(1.5, 3.5) # Dừng lại quan sát 1.5 đến 3.5 giây
@@ -68,7 +59,7 @@ func _physics_process(delta: float) -> void:
 			var nav_map = get_world_2d().navigation_map
 			diem_tuan_tra = NavigationServer2D.map_get_closest_point(nav_map, diem_ngau_nhien)
 
-	# 2. LOGIC LÁI XE VÀ LÁCH NHAU (Chạy tiếp nếu chưa đến đích)
+	# 2. LOGIC LÁI XE VÀ LÁCH NHAU
 	if nav_agent.is_navigation_finished():
 		velocity = velocity.move_toward(Vector2.ZERO, acceleration * delta)
 		move_and_slide()
@@ -95,3 +86,23 @@ func _apply_movement():
 		# Đã đổi thành - PI / 2 dành cho trường hợp đầu xe chĩa XUỐNG DƯỚI
 		rotation = velocity.angle() - PI / 2
 	move_and_slide()
+
+# ==========================================
+# 3. HỆ THỐNG BẮT GIỮ MỚI (DÙNG AREA2D)
+# ==========================================
+func _on_catch_area_body_entered(body: Node2D) -> void:
+	# Chỉ kích hoạt bắt giữ khi xe đang ở trạng thái truy đuổi
+	if trang_thai == "CHASE" and WantedManager.wanted_level > 0:
+		# Check xem kẻ lọt vào vùng quét có đúng là người chơi không
+		if body.is_in_group("Player"):
+			print("🚨 CẢNH SÁT: Đã túm cổ Shipper!")
+			
+			# Gọi hàm nhận sát thương của Shipper (Ép chết luôn)
+			if body.has_method("bi_tru_mau"):
+				body.bi_tru_mau(1000) 
+			
+			# Hoặc nếu ông viết sẵn hàm bi_bat() bên Shipper thì gọi nó
+			# if body.has_method("bi_bat"): body.bi_bat()
+			
+			# Chuyển cảnh sát sang trạng thái nghỉ đi tuần
+			trang_thai = "PATROL"
